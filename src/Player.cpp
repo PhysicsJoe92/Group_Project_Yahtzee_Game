@@ -42,14 +42,9 @@ void Player::setName(string name){
 }
 
 void Player::throwDice(Dice& dice,int keep){
-    if(keep==0) dice.rollDice();
+    if(keep==0) dice.roll();
     else{
-        //char *keep;
-        //cin>>keep;
-        int *diceKept=new int[keep];//User malloc to allocate memory
-                                    //Maybe use char* to represent characters
-                                    //Then you can do isdigit(keep[i])
-        //char* dieKept=(char*)mallac(keep);
+        int *diceKept=new int[keep];
         resetDKeep(diceKept,keep);
 
         cout<<setw(21)<<""<<"Which die would you like to hold(1-5)?"<<endl;
@@ -90,50 +85,38 @@ void Player::throwDice(Dice& dice,int keep){
         dice.rollDice(diceKept,keep);
         
         
-        delete []diceKept;//User free to de-allocate memory
+        delete []diceKept;
     }
 }
 
 void Player::takeTurn(Dice& dice){
     int turns=0;
     int keep=0;
-    cout<<endl<<endl;
+    cout<<"\n \n";
     cout<<setw(21)<<""<<userName<<"'s Turn:"<<endl;
     
-    do{
-        //First roll/roll all die
-        if(!keep||!turns){
-            throwDice(dice,keep);
-            turns++;
-            keep=-1;
-            dice.printDice();
-        }
-        //Roll again
-        else{
-            keep=0;
-            cout<<setw(21)<<""<<"How many dice would you like to keep?"<<endl;
-            cout<<setw(21)<<""<<"Keep: ";
-            cin>>keep;
-
-            while(keep<0||keep>5){
-                cout<<setw(21)<<""<<"Select number of die to keep."<<endl;
-                cout<<setw(21)<<""<<"0 to roll all dice, 1-5 to hold the"
-                        <<"dice you want to keep.";
-                cout<<setw(21)<<""<<"5 is to hold all the dice.";
-                cout<<setw(21)<<"";
-                cin>>keep;
-            }
-            
-            if(keep!=5)
-                throwDice(dice,keep);
-            if(keep==0)keep=-1;
-            turns++;
-            dice.printDice();
-        }
-    }while(keep!=5 && turns<3);
+    while(keep!=5 && turns<3){
+        throwDice(dice,keep);
+        turns++;
+        dice.printDice();
+        if(turns < 3)keep = keepDice();
+    }
     
     selCat(dice);
     saveCard();
+}
+
+
+
+int Player::keepDice(){
+    int keep;
+    cout<<setw(21)<<""<<"Select number of die to keep."<<endl;
+    cout<<setw(21)<<""<<"0 to roll all dice, 1-5 to hold the dice you want to keep. \n";
+    cout<<setw(21)<<""<<"5 is to hold all the dice.";
+    cin>>keep;
+    if(keep < 0 || keep > 5)keep = keepDice();
+    return keep;
+
 }
 
 void Player::selCat(Dice dice){

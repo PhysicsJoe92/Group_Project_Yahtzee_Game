@@ -23,6 +23,7 @@ class Player{
         void takeTurn(Dice&);
         void saveCard();
         void setScore();
+        int keepDice();
         
         bool isEmpty(fstream&);
         bool isPlayerDone();
