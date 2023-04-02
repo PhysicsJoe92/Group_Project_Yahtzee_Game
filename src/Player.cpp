@@ -45,6 +45,7 @@ void Player::throwDice(Dice& dice,int keep){
     if(keep==0) dice.rollDice();
     else{
         char hold=0;
+        cin.ignore(1000,'\n');
         
         while(!holdDice(hold,keep));
         int* diceKept=holdCheck(hold,keep);
@@ -80,30 +81,55 @@ void Player::takeTurn(Dice& dice){
 
 bool Player::holdDice(char &hold,int numHold){
     char *buffer;
-    buffer=new char[numHold];
-    hold=0;
-    cout<<setw(21)<<""<<"Enter dice to keep: ";
-    for(int i=0;i<numHold;i++){
-        cin>>buffer[i];
-    }
-    buffer[numHold]='\0';
+    char* input;
     
+    buffer=new char[81];
+    
+    cout<<setw(21)<<""<<"Enter dice to keep: ";
+    cin.getline(buffer,81);
+    
+    //Hold number of non-whitespace characters
+    int buffLen=0;
+    
+    //Check if number of entries = number to hold
+    for(int i=0;i<strlen(buffer);i++){
+        if(buffer[i]!=' '){
+            buffLen++;
+        }
+    }
+    
+    if(buffLen!=numHold){
+        cout<<setw(21)<<""<<"Incorrect number of dice entered"<<endl;
+    }
+    else{
+        int count=0;
+        input=new char[numHold];
+        for(int i=0;i<strlen(buffer);i++){
+            if(buffer[i]!=' '){
+                input[count++]=buffer[i];
+            }
+        }
+        input[numHold]='\0';
+    }
+    
+    hold=0;
+
     // 000|_ _ _ _ _ last 5 bits represent dice to hold
-    int size=strlen((char*)buffer);
+    int size=strlen((char*)input);
     for(int i=0;i<numHold;i++){
-        switch(buffer[i]){
+        switch(input[i]){
             case '1':
                 //Test if already marked
                 {
                     char tmp = hold;
                     tmp&=1;
                     tmp^=1;
-                    if(tmp==0){cout<<"Already chosen";return false;}
+                    if(tmp==0){cout<<setw(21)<<""<<"Already chosen";return false;}
                     //Escape out of call, return false
                 }
                 //Continue
-                buffer[i]=1;
-                hold^=buffer[i];
+                input[i]=1;
+                hold^=input[i];
                 break;
             case '2':
                 //Test if already marked
@@ -111,11 +137,11 @@ bool Player::holdDice(char &hold,int numHold){
                     char tmp = hold;
                     tmp&=2;
                     tmp^=2;
-                    if(tmp==0){cout<<"Already chosen";return false;}
+                    if(tmp==0){cout<<setw(21)<<""<<"Already chosen";return false;}
                     //Escape out of call, return false
                 }
-                buffer[i]=2;
-                hold^=buffer[i];
+                input[i]=2;
+                hold^=input[i];
                 break;
             case '3':
                 //Test if already marked
@@ -123,11 +149,11 @@ bool Player::holdDice(char &hold,int numHold){
                     char tmp = hold;
                     tmp&=4;
                     tmp^=4;
-                    if(tmp==0){cout<<"Already chosen";return false;}
+                    if(tmp==0){cout<<setw(21)<<""<<"Already chosen";return false;}
                     //Escape out of call, return false
                 }
-                buffer[i]=4;
-                hold^=buffer[i];
+                input[i]=4;
+                hold^=input[i];
                 break;
             case '4':
                 //Test if already marked
@@ -135,11 +161,11 @@ bool Player::holdDice(char &hold,int numHold){
                     char tmp = hold;
                     tmp&=8;
                     tmp^=8;
-                    if(tmp==0){cout<<"Already chosen";return false;}
+                    if(tmp==0){cout<<setw(21)<<""<<"Already chosen";return false;}
                     //Escape out of call, return false
                 }
-                buffer[i]=8;
-                hold^=buffer[i];
+                input[i]=8;
+                hold^=input[i];
                 break;
             case '5':
                 //Test if already marked
@@ -147,18 +173,18 @@ bool Player::holdDice(char &hold,int numHold){
                     char tmp = hold;
                     tmp&=16;
                     tmp^=16;
-                    if(tmp==0){cout<<"Already chosen";return false;}
+                    if(tmp==0){cout<<setw(21)<<""<<"Already chosen";return false;}
                     //Escape out of call, return false
                 }
-                buffer[i]=16;
-                hold^=buffer[i];
+                input[i]=16;
+                hold^=input[i];
                 break;
             default:
-                cout<<"Incorrect selection"<<endl;
+                cout<<setw(21)<<""<<"Incorrect selection"<<endl;
                 return false;
         }
     }
-    delete []buffer;
+    delete []input;
     //Return true for valid entry//
     return true;
 }
