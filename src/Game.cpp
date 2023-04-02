@@ -56,10 +56,9 @@ void Game::start(){
             }
         }
     }
-    //Put players into queue
+    //Put players in the vector using emplace_back instead of using queue
     for(int i=0;i<numP;i++){
-        Player player(names[i]);
-        players.push(player);
+        players.emplace_back(names[i]);
     }
 }
 
@@ -68,45 +67,30 @@ void Game::play(){
     string winner;
     int highScore=0;    
     
-    //Get the first player
-    Player currPlayer = players.front();
     //Multiplayer
     if(numP>1){
         bool endGame=gameOver();
+        int currentPlayerIndex = 0;
         while(!endGame){
             //Continue?
+            Player& currPlayer = players[currentPlayerIndex];
             pause();
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
-            players.push(currPlayer);
-            players.pop();
+            currentPlayerIndex = (currentPlayerIndex + 1) % numP;
             endGame=gameOver();
         }
         
-        currPlayer = players.front();
-    
-        currPlayer.setScore();
-        currPlayer.saveCard();
-        
-        winner=currPlayer.getName();
-        highScore=currPlayer.getScore();
-        
-        players.push(currPlayer);
-        players.pop();
-
-        for(int i=1;i<players.size();i++){
-            currPlayer = players.front();
+        for(int i=0;i<numP ;i++){
+            Player& currPlayer = players[i];
             currPlayer.setScore();
             currPlayer.saveCard();
-            
-            int score=currPlayer.getScore();
-            if(score>highScore){
-                winner=currPlayer.getName();
-                highScore=score;
+            int score = currPlayer.getScore();
+            if (score > highScore) {
+                winner = currPlayer.getName();
+                highScore = score;
             }
             currPlayer.printCard();
-            players.push(currPlayer);
-            players.pop();
         }
         cout<<setw(21)<<""<<"Game winner: "<<winner<<endl;
         cout<<setw(21)<<""<<"Total Score: "<<highScore<<endl;
@@ -115,6 +99,7 @@ void Game::play(){
     }
     //Single Player
     else{
+        Player& currPlayer = players[0];
         while(!currPlayer.isPlayerDone()){
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
@@ -122,7 +107,7 @@ void Game::play(){
         }
         currPlayer.setScore();
         currPlayer.saveCard();
-        highScore=currPlayer.getScore();
+        highScore = currPlayer.getScore();
         cout<<setw(21)<<""<<"Total Score: "<<highScore<<endl;
         currPlayer.printCard();
     }
@@ -190,30 +175,19 @@ bool Game::playAgain(){
 bool Game::gameOver(){
     Player player;
     bool gameOver;
-    int count=0;
-    if(numP>1){
-        while(count<numP){
-            player=players.front();
-            //Check if player has finished scoring
-            if(!player.isPlayerDone()){
-                //Put front player in back of queue
-                players.push(player);
-                //Pop front player
-                players.pop();
-                gameOver=false;
-            }
-            else gameOver=true;
-            count++;
+    for(auto player : players) {
+        if(!player.isPlayerDone()) {
+            gameOver = false;
+            break;
         }
     }
-    //Return if queue is empty or not
     return gameOver;
 }
 
 void Game::debugGame(){
     //Create a fake player
     Player player("Debug");
-    players.push(player);
+    players.emplace_back(player);
     numP=1;
     Player currPlayer=players.front();
 

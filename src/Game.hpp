@@ -13,7 +13,8 @@
 #include "Dice.hpp"
 #include "Menu.hpp"
 
-#include <queue>
+//#include <queue>
+#include <vector>
 
 class Game{
     public:
@@ -30,7 +31,7 @@ class Game{
         int numP;
         Dice dice;
         Menu menu;
-        queue<Player> players;
+        vector<Player> players;
         
         //Check if each player is done
         bool gameOver();
