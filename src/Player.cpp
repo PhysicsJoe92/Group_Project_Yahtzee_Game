@@ -75,7 +75,7 @@ void Player::throwDice(Dice& dice,int keep){
             diceKept[i]=(dk-1);
         }
         
-        dice.sort(diceKept,keep-1);
+        dice.mergeSort(diceKept,0,keep-1);
 
         cout<<setw(21)<<""<<"Dice Kept: ";
         for(int i=0;i<keep;i++){
@@ -111,8 +111,8 @@ void Player::takeTurn(Dice& dice){
 int Player::keepDice(){
     int keep;
     cout<<setw(21)<<""<<"Select number of die to keep."<<endl;
-    cout<<setw(21)<<""<<"0 to roll all dice, 1-5 to hold the dice you want to keep. \n";
-    cout<<setw(21)<<""<<"5 is to hold all the dice.";
+    //cout<<setw(21)<<""<<"0 to roll all dice, 1-5 to hold the dice you want to keep. \n";
+    //cout<<setw(21)<<""<<"5 is to hold all the dice.";
     cin>>keep;
     if(keep < 0 || keep > 5)keep = keepDice();
     return keep;
