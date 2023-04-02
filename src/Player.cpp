@@ -42,7 +42,7 @@ void Player::setName(string name){
 }
 
 void Player::throwDice(Dice& dice,int keep){
-    if(keep==0) dice.roll();
+    if(keep==0) dice.rollDice();
     else{
         int *diceKept=new int[keep];
         resetDKeep(diceKept,keep);
