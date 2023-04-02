@@ -198,7 +198,7 @@ int* Player::holdCheck(char hold,int numHold){
 
 int Player::keepDice(){
     int keep;
-    cout<<setw(21)<<""<<"Enter how may dice you would like to keep."<<endl;
+    cout<<setw(21)<<""<<"Enter how may dice you would like to keep:"<<endl;
     cout<<setw(21)<<"";
     cin>>keep;
     if(keep < 0 || keep > 5)keep = keepDice();
