@@ -8,7 +8,7 @@
 #define PLAYER_H
 
 #include <algorithm>
-#include <set>
+#include <cstring>
 #include "ScoreCard.hpp"
 
 class Player{
@@ -37,6 +37,8 @@ class Player{
         int numWins=0;
         string userName;
         ScoreCard card;
+        bool holdDice(char&,int);
+        int *holdCheck(char,int);
 };
 
 #endif /* PLAYER_H */

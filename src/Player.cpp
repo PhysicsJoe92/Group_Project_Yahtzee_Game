@@ -44,39 +44,11 @@ void Player::setName(string name){
 void Player::throwDice(Dice& dice,int keep){
     if(keep==0) dice.rollDice();
     else{
-        int *diceKept=new int[keep];
-        resetDKeep(diceKept,keep);
-
-        cout<<setw(21)<<""<<"Which die would you like to hold(1-5)?"<<endl;
-        int dk;
-        cout<<setw(21)<<""<<"Hold: ";
-        for(int i=0;i<keep;i++){
-            cin>>dk;
-            
-            //Input validation
-            while(dk<1 || dk>5){
-                cout<<setw(21)<<""<<dk<<" Not Valid:"<<endl;
-                cout<<setw(21)<<""<<"Select dice 1-5"<<endl;
-                cout<<setw(21)<<"";
-                cin.clear();
-                cin.ignore(1000,'\n');
-                cin>>dk;
-            }
-            
-            
-            if((count(diceKept,diceKept+keep,dk-1)>0)){
-                cout<<setw(21)<<""<<dk<<" already entered."<<endl;
-                cout<<setw(21)<<""<<"Select Different Die"<<endl;
-                cout<<setw(21)<<"";
-                cin.clear();
-                cin.ignore(1000,'\n');
-                cin>>dk;
-            }
-            diceKept[i]=(dk-1);
-        }
+        char hold=0;
         
-        dice.mergeSort(diceKept,0,keep-1);
-
+        while(!holdDice(hold,keep));
+        int* diceKept=holdCheck(hold,keep);
+        
         cout<<setw(21)<<""<<"Dice Kept: ";
         for(int i=0;i<keep;i++){
             cout<<diceKept[i]+1<<" ";
@@ -106,13 +78,128 @@ void Player::takeTurn(Dice& dice){
     saveCard();
 }
 
+bool Player::holdDice(char &hold,int numHold){
+    char *buffer;
+    buffer=new char[numHold];
+    hold=0;
+    cout<<setw(21)<<""<<"Enter dice to keep: ";
+    for(int i=0;i<numHold;i++){
+        cin>>buffer[i];
+    }
+    buffer[numHold]='\0';
+    
+    // 000|_ _ _ _ _ last 5 bits represent dice to hold
+    int size=strlen((char*)buffer);
+    for(int i=0;i<numHold;i++){
+        switch(buffer[i]){
+            case '1':
+                //Test if already marked
+                {
+                    char tmp = hold;
+                    tmp&=1;
+                    tmp^=1;
+                    if(tmp==0){cout<<"Already chosen";return false;}
+                    //Escape out of call, return false
+                }
+                //Continue
+                buffer[i]=1;
+                hold^=buffer[i];
+                break;
+            case '2':
+                //Test if already marked
+                {
+                    char tmp = hold;
+                    tmp&=2;
+                    tmp^=2;
+                    if(tmp==0){cout<<"Already chosen";return false;}
+                    //Escape out of call, return false
+                }
+                buffer[i]=2;
+                hold^=buffer[i];
+                break;
+            case '3':
+                //Test if already marked
+                {
+                    char tmp = hold;
+                    tmp&=4;
+                    tmp^=4;
+                    if(tmp==0){cout<<"Already chosen";return false;}
+                    //Escape out of call, return false
+                }
+                buffer[i]=4;
+                hold^=buffer[i];
+                break;
+            case '4':
+                //Test if already marked
+                {
+                    char tmp = hold;
+                    tmp&=8;
+                    tmp^=8;
+                    if(tmp==0){cout<<"Already chosen";return false;}
+                    //Escape out of call, return false
+                }
+                buffer[i]=8;
+                hold^=buffer[i];
+                break;
+            case '5':
+                //Test if already marked
+                {
+                    char tmp = hold;
+                    tmp&=16;
+                    tmp^=16;
+                    if(tmp==0){cout<<"Already chosen";return false;}
+                    //Escape out of call, return false
+                }
+                buffer[i]=16;
+                hold^=buffer[i];
+                break;
+            default:
+                cout<<"Incorrect selection"<<endl;
+                return false;
+        }
+    }
+    delete []buffer;
+    //Return true for valid entry//
+    return true;
+}
 
+int* Player::holdCheck(char hold,int numHold){
+    int *index=new int[numHold];
+    int count=0;
+    //Check what bits are flagged
+    for(int i=0;i<5;i++){
+        unsigned char test=hold;
+        //Auto sorts index
+        switch(i){
+            case 0:
+                test&=1;//Clear all bits except the one we need
+                if(test==1)index[count++]=i;//Check if true, use index 0
+                break;
+            case 1:
+                test&=2;
+                if(test==2)index[count++]=i;//Check if true, use index 1
+                break;
+            case 2:
+                test&=4;
+                if(test==4)index[count++]=i;//Check if true, use index 2
+                break;
+            case 3:
+                test&=8;
+                if(test==8)index[count++]=i;//Check if true, use index 3
+                break;
+            case 4:
+                test&=16;
+                if(test==16)index[count++]=i;//Check if true, use index 4
+                break;
+        }
+    }
+    return index;
+}
 
 int Player::keepDice(){
     int keep;
-    cout<<setw(21)<<""<<"Select number of die to keep."<<endl;
-    //cout<<setw(21)<<""<<"0 to roll all dice, 1-5 to hold the dice you want to keep. \n";
-    //cout<<setw(21)<<""<<"5 is to hold all the dice.";
+    cout<<setw(21)<<""<<"Enter how may dice you would like to keep."<<endl;
+    cout<<setw(21)<<"";
     cin>>keep;
     if(keep < 0 || keep > 5)keep = keepDice();
     return keep;
