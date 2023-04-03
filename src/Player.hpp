@@ -7,7 +7,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <algorithm>
 #include <cstring>
 #include "ScoreCard.hpp"
 
@@ -20,7 +19,7 @@ class Player{
         void selCat(Dice);
         void printCard();
         void throwDice(Dice&,int);
-        void takeTurn(Dice&);
+        void takeTurn(Dice);
         void saveCard();
         void setScore();
         int keepDice();
@@ -31,7 +30,7 @@ class Player{
         inline int getScore(){return score;}
         inline string getName(){return userName;}
         
-        void debugPlayer(Dice&);
+        void debugPlayer(Dice);
     private:
         int score=0;
         int numWins=0;

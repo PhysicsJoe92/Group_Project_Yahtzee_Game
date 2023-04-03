@@ -36,7 +36,6 @@ void Game::start(){
         getline(cin,name);
         //Put players into vector
         names[i]=name;
-        cin.clear();
     }
     
     if(numP>1){
@@ -71,9 +70,10 @@ void Game::play(){
     if(numP>1){
         bool endGame=gameOver();
         int currentPlayerIndex = 0;
+        
         while(!endGame){
             //Continue?
-            Player& currPlayer = players[currentPlayerIndex];
+            Player currPlayer = players[currentPlayerIndex];
             pause();
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
@@ -82,7 +82,7 @@ void Game::play(){
         }
         
         for(int i=0;i<numP ;i++){
-            Player& currPlayer = players[i];
+            Player currPlayer = players[i];
             currPlayer.setScore();
             currPlayer.saveCard();
             int score = currPlayer.getScore();
@@ -99,7 +99,7 @@ void Game::play(){
     }
     //Single Player
     else{
-        Player& currPlayer = players[0];
+        Player currPlayer = players[0];
         while(!currPlayer.isPlayerDone()){
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
@@ -175,7 +175,7 @@ bool Game::playAgain(){
 bool Game::gameOver(){
     Player player;
     bool gameOver;
-    for(auto player : players) {
+    for(int i=0;i<numP;i++) {
         if(!player.isPlayerDone()) {
             gameOver = false;
             break;
@@ -187,9 +187,9 @@ bool Game::gameOver(){
 void Game::debugGame(){
     //Create a fake player
     Player player("Debug");
-    players.emplace_back(player);
     numP=1;
-    Player currPlayer=players.front();
+    players[0]=player;
+    Player currPlayer=players[0];
 
     while(!currPlayer.isPlayerDone()){
         //Change player score card

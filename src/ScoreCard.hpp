@@ -47,7 +47,7 @@ class ScoreCard{
         //Bit vector to hold if section is filled
         bool bit_vector[bSize];
         //Stack to hold YAHTZEE BONUS
-        stack<int> bonus;
+        vector<int> bonus;
         // container to hold upper section values (up to 5 games)
         int upperSec[numGames][upRows];
         // container to hold lower section values (up to 5 games)
@@ -56,8 +56,6 @@ class ScoreCard{
         string upperName[upRows];
         // container to hold lower section names
         string lowerName[lwRows];
-        //Hash Function
-        unsigned int hashFunction(string&);
         
 };
 

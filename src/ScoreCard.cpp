@@ -183,47 +183,46 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
     Face val;
 
     scoreSec=format(scoreSec);
-
     //Upper Section
     //Count all ones
-    if(hashFunction(scoreSec)==hashFunction(upperName[0]) && bit_vector[0]!=1){
+    if(scoreSec.compare(upperName[0])==0 && bit_vector[0]!=1){
         val=Face::ONE; upperSec[currGame][0]=dice.getDiceVal(val);
         bit_vector[0]=1;
         return true;
     }
     //Count all twos
-    else if(hashFunction(scoreSec)==hashFunction(upperName[1]) && bit_vector[1]!=1){
+    else if(scoreSec.compare(upperName[1])==0 && bit_vector[1]!=1){
         val=Face::TWO; upperSec[currGame][1]=dice.getDiceVal(val);
         bit_vector[1]=1;
         return true;
     }
     //Count all Threes
-    else if(hashFunction(scoreSec)==hashFunction(upperName[2]) && bit_vector[2]!=1){
+    else if(scoreSec.compare(upperName[2])==0 && bit_vector[2]!=1){
         val=Face::THREE; upperSec[currGame][2]=dice.getDiceVal(val);
         bit_vector[2]=1;
         return true;
     }
     //Count all Fours
-    else if(hashFunction(scoreSec)==hashFunction(upperName[3]) && bit_vector[3]!=1){
+    else if(scoreSec.compare(upperName[3])==0 && bit_vector[3]!=1){
         val=Face::FOUR; upperSec[currGame][3]=dice.getDiceVal(val);
         bit_vector[3]=1;
         return true;
     }
     //Count all Fives
-    else if(hashFunction(scoreSec)==hashFunction(upperName[4]) && bit_vector[4]!=1){
+    else if(scoreSec.compare(upperName[4])==0 && bit_vector[4]!=1){
         val=Face::FIVE; upperSec[currGame][4]=dice.getDiceVal(val);
         bit_vector[4]=1;
         return true;
     }
     //Count all Sixes
-    else if(hashFunction(scoreSec)==hashFunction(upperName[5]) && bit_vector[5]!=1){
+    else if(scoreSec.compare(upperName[5])==0 && bit_vector[5]!=1){
         val=Face::SIX; upperSec[currGame][5]=dice.getDiceVal(val);
         bit_vector[5]=1;
         return true;
     }
     //Lower Section
     //3 of a kind
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[0]) && bit_vector[6]!=1){
+    else if(scoreSec.compare(lowerName[0])==0 && bit_vector[6]!=1){
         //Check if at least 3 faces are the same
         if(!dice.is3Kind()) lowerSec[currGame][0]=0;
         else{val=Face::ALL; lowerSec[currGame][0]=dice.getDiceVal(val);}
@@ -231,7 +230,7 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
         return true;
     }
     //4 of a kind
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[1]) && bit_vector[7]!=1){
+    else if(scoreSec.compare(lowerName[1])==0 && bit_vector[7]!=1){
         //Check if at least 4 faces are the same
         if(!dice.is4Kind()) lowerSec[currGame][1]=0;
         else{val=Face::ALL; lowerSec[currGame][1]=dice.getDiceVal(val);}
@@ -239,7 +238,7 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
         return true;
     }
     //Full House
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[2]) && bit_vector[8]!=1){
+    else if(scoreSec.compare(lowerName[2])==0 && bit_vector[8]!=1){
         //Check if 3/2 dice are the same
         if(!dice.isFullHouse()) lowerSec[currGame][2]=0;
         else lowerSec[currGame][2]=25;
@@ -247,7 +246,7 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
         return true;
     }
     //Small Straight
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[3]) && bit_vector[9]!=1){
+    else if(scoreSec.compare(lowerName[3])==0 && bit_vector[9]!=1){
         //Check if 4 dice are in ascending order
         if(!dice.isSStraight())lowerSec[currGame][3]=0;
         else lowerSec[currGame][3]=30;
@@ -255,7 +254,7 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
         return true;
     }
     //Large Straight
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[4]) && bit_vector[10]!=1){
+    else if(scoreSec.compare(lowerName[4])==0 && bit_vector[10]!=1){
         //Check if 5 dice are in ascending order
         if(!dice.isLStraight()) lowerSec[currGame][4]=0;
         else lowerSec[currGame][4]=40;
@@ -263,20 +262,20 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
         return true;
     }
     //YAHTZEE
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[5])){
+    else if(scoreSec.compare(lowerName[5])==0){
         //Check all 5 die are the same
         if(dice.isYahtzee() && bit_vector[11]!=1){
             lowerSec[currGame][5]=50;
         }
         //Check if YAHTZEE has been filled, if so push onto bonus stack
-        else if(dice.isYahtzee() && bit_vector[11]==1){bonus.push(100);}
+        else if(dice.isYahtzee() && bit_vector[11]==1){bonus.push_back(100);}
         else {lowerSec[currGame][5]=0;}
         lowerSec[currGame][7]=0;
         bit_vector[11]=1;
         return true;
     }
     //Chance
-    else if(hashFunction(scoreSec)==hashFunction(lowerName[6]) && bit_vector[12]!=1){
+    else if(scoreSec.compare(lowerName[6])==0 && bit_vector[12]!=1){
         //Add up all the die
         val=Face::ALL; lowerSec[currGame][6]=dice.getDiceVal(val);
         bit_vector[12]=1;
@@ -339,9 +338,9 @@ int ScoreCard::getScore(){
         }
     }
     //Count Yahtzee bonus (if any)
+    int i=0;
     while(!bonus.empty()){
-        lowerSec[currGame][7]+=bonus.top();
-        bonus.pop();
+        lowerSec[currGame][7]+=bonus[i++];
     }
     lowerSec[currGame][8]+=lowerSec[currGame][7];
     //Get Totals
@@ -378,15 +377,4 @@ void ScoreCard::debugCard(){
         cout<<bit_vector[i]<<" ";
     }
     cout<<endl;
-}
-
-unsigned int ScoreCard::hashFunction(string& str){
-    unsigned int a = 432547067;
-    unsigned int b = 30509;
-    unsigned int hash = 0;
-    
-    for(int i=0;i<str.length();i++){
-        hash = hash * a * b + str[i];
-    }
-    return hash;
 }

@@ -45,8 +45,7 @@ void Player::throwDice(Dice& dice,int keep){
     if(keep==0) dice.rollDice();
     else{
         char hold=0;
-        cin.ignore(1000,'\n');
-        
+
         while(!holdDice(hold,keep));
         int* diceKept=holdCheck(hold,keep);
         
@@ -62,7 +61,7 @@ void Player::throwDice(Dice& dice,int keep){
     }
 }
 
-void Player::takeTurn(Dice& dice){
+void Player::takeTurn(Dice dice){
     int turns=0;
     int keep=0;
     cout<<"\n \n";
@@ -228,27 +227,24 @@ int Player::keepDice(){
     cout<<setw(21)<<"";
     cin>>keep;
     if(keep < 0 || keep > 5)keep = keepDice();
+    cin.ignore(1000,'\n');
     return keep;
 
 }
 
 void Player::selCat(Dice dice){
     string category;
-    card.printCategories();
-    cout<<endl;
     
-    cout<<setw(21)<<""<<"Select Category: ";
-    
-    cin.ignore(1000,'\n');
-    getline(cin,category);
-    
-    bool filled = card.setScoreCell(category,dice);
-    
-    while(!filled){
-        cout<<setw(21)<<""<<"Select Category:";
+    bool filled;
+    do{
+        card.printCategories();
+        cout<<endl;
+        cout<<setw(21)<<""<<"Select Category: ";
+
         getline(cin,category);
-        filled=card.setScoreCell(category,dice);
-    }
+
+        filled = card.setScoreCell(category,dice);
+    }while(!filled);
 }
 
 void Player::printCard(){
@@ -276,7 +272,7 @@ bool Player::isPlayerDone(){
     return done;
 }
 
-void Player::debugPlayer(Dice &dice){
+void Player::debugPlayer(Dice dice){
     dice.debugDice();
     selCat(dice);
     card.debugCard();
