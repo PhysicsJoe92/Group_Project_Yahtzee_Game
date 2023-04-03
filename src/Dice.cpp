@@ -45,42 +45,31 @@ Dice::Dice(int s){
 
 void Dice::setSize(int s){
     size=s;
-    
 }
 
-void Dice::printDice(){
-    DiceType itr = dice.begin();
-
+void Dice::printDice(){    
     int counter=1;
     cout<<endl;
-    for(itr;itr!=dice.end();itr++){
+    for(int i=0;i<size;i++){
         cout<<"  Dice "<<counter++<<endl;
-        cout<<picDie[*itr]<<endl;
+        cout<<picDie[dice[i]]<<endl;
     }
 }
 
 void Dice::rollDice(int *keep,int length){
-    list<Face> temp;
-   
-    //Convert dice to integer array
-    int *array=listToArray();
-    
     //Compare the dice kept to the dice array
-    int i=0,j=0;
-    for(i;(i<size) && (j<length);i++){
-        if(i==keep[j]){
-            j++;
-        }
-        else if(i!=keep[j]){
-            array[i]=rand()%6;
+    int count=0;
+    Face val;
+    for(int i=0;(i<size);i++){
+        count%=length;//Always give 0-(n-1) where n is the length given
+        if(i!=keep[count++]){
+            int rnd = rand()%6;
+            val=static_cast<Face>(rnd);
+            dice[i]=val;
+            count--;
         }
     }
-    
-    arrayToList(array);
-    
     sort();
-    
-    delete []array;
 }
 
 void Dice::rollDice(){
@@ -96,13 +85,12 @@ void Dice::rollDice(){
 }
 
 int Dice::getDiceVal(Face val){
-    DiceType itr = dice.begin();
     int score=0;
     switch(val){
         //Add all the ones in dice
         case Face::ONE:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::ONE){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::ONE){
                     score+=1;
                 }
             }
@@ -110,8 +98,8 @@ int Dice::getDiceVal(Face val){
         }
         //Add all the twos in dice
         case Face::TWO:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::TWO){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::TWO){
                     score+=2;
                 }
             }
@@ -119,8 +107,8 @@ int Dice::getDiceVal(Face val){
         }
         //Add all the threes in dice
         case Face::THREE:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::THREE){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::THREE){
                     score+=3;
                 }
             }
@@ -128,8 +116,8 @@ int Dice::getDiceVal(Face val){
         }
         //Add all the fours in dice
         case Face::FOUR:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::FOUR){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::FOUR){
                     score+=4;
                 }
             }
@@ -137,16 +125,16 @@ int Dice::getDiceVal(Face val){
         }
         //Add all the fives in dice
         case Face::FIVE:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::FIVE){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::FIVE){
                     score+=5;
                 }
             }
             break;
         } 
         case Face::SIX:{
-            for(itr;itr!=dice.end();itr++){
-                if(*itr==Face::SIX){
+            for(int i=0;i<size;i++){
+                if(dice[i]==Face::SIX){
                     score+=6;
                 }
             }
@@ -154,14 +142,14 @@ int Dice::getDiceVal(Face val){
         }
         //Add all dice
         case Face::ALL: {
-            for(itr;itr!=dice.end();itr++){
+            for(int i=0;i<size;i++){
                 //Count ones
-                if(*itr==Face::ONE)         score+=1;
-                else if(*itr==Face::TWO)    score+=2;
-                else if(*itr==Face::THREE)  score+=3;
-                else if(*itr==Face::FOUR)   score+=4;
-                else if(*itr==Face::FIVE)   score+=5;
-                else if(*itr==Face::SIX)    score+=6;
+                if(dice[i]==Face::ONE)         score+=1;
+                else if(dice[i]==Face::TWO)    score+=2;
+                else if(dice[i]==Face::THREE)  score+=3;
+                else if(dice[i]==Face::FOUR)   score+=4;
+                else if(dice[i]==Face::FIVE)   score+=5;
+                else if(dice[i]==Face::SIX)    score+=6;
             }
             break;//add all dice
         }
@@ -171,34 +159,32 @@ int Dice::getDiceVal(Face val){
 
 bool Dice::is3Kind(){
     //At least 3 are the same face
-    DiceType itr = dice.begin();
-    Face face=*itr;                     //Set first die as face to match
-    itr++;                              //Move to next die
-    int count=1;                        //Count 1 die for the face
-    for(itr;itr!=dice.end();itr++){
-        if(*itr==face) {                //curr die = face
-            count++;                    //increment number of match
+    Face face=dice[0];                     //Set first die as face to match
+                                           //Move to next die
+    int count=1;                           //Count 1 die for the face
+    for(int i=1;i<size;i++){
+        if(dice[i]==face) {                //curr die = face
+            count++;                       //increment number of match
             if(count>=3)return true;
         }
         else{
-            face=*itr; count=1;         //Set curr die as face to match
+            face=dice[i]; count=1;         //Set curr die as face to match
         }  
     }
-    if(count<3) return false;           //If the count < 3 then no 3 kind
+    if(count<3) return false;              //If the count < 3 then no 3 kind
     return true;
 }
 
 bool Dice::is4Kind(){
-    DiceType itr = dice.begin();
-    Face face=*itr;                 //Set first die as face to match
-    itr++;                          //Move to next die
-    int count=1;                    //Count 1 die for face
-    for(itr;itr!=dice.end();itr++){
-        if(*itr==face){             //curr die = face -> increment number of match
+    Face face=dice[0];                  //Set first die as face to match
+                                        //Move to next die
+    int count=1;                        //Count 1 die for face
+    for(int i=1;i<size;i++){
+        if(dice[i]==face){             //curr die = face -> increment number of match
             count++;
             if(count>=4)return true;
         }      
-        else{ face=*itr; count=1;}  //Set curr die as face to match
+        else{ face=dice[i]; count=1;}  //Set curr die as face to match
     }
     if(count<4) return false;       //If count < 4 then no 4 kind
     return true;
@@ -207,26 +193,24 @@ bool Dice::is4Kind(){
 bool Dice::isFullHouse(){
     //Full House
     //3 of one die 2 of another
-    DiceType itr = dice.begin();
-    Face fFace = *itr;
+    Face fFace = dice[0];
     Face sFace;
-    itr++;
-    
+    int i=1;
     int frst=1;
     int scnd=1;
-    for(itr;itr!=dice.end();itr++){
-        if(*itr==fFace){
+    for(i;i<size;i++){
+        if(dice[i]==fFace){
             frst++;
         }
         else{
-            sFace=*itr;
-            itr++;
+            sFace=dice[i];
+            i++;
             break;
         }
     }
     
-    for(itr;itr!=dice.end();itr++){
-        if(*itr==sFace){
+    for(i;i<size;i++){
+        if(dice[i]==sFace){
             scnd++;
         }
     }
@@ -239,24 +223,22 @@ bool Dice::isFullHouse(){
 bool Dice::isSStraight(){
     //Small Straight
     //4 Consecutive face values
-    DiceType itr=dice.begin();
     //Find starting face value
-    Face val = *itr;
+    Face val = dice[0];
     //Iterate to the next die
-    itr++;
     //So we can increment through the enum face class
     int temp=(int)val;
     //Number of consecutive face values
     int consec=1;
-    for(itr;itr!=dice.end();itr++){
-        if((Face)(temp+1)==*itr){
+    for(int i=1;i<size;i++){
+        if((Face)(temp+1)==dice[i]){
             consec++;
             temp++;
             val=(Face)temp;
             if(consec==4)return true;
         }
-        else if((Face)temp!=*itr){
-            val=*itr;
+        else if((Face)temp!=dice[i]){
+            val=dice[i];
             temp=(int)val;
             consec=1;
         }
@@ -269,16 +251,14 @@ bool Dice::isSStraight(){
 bool Dice::isLStraight(){
     //large Straight
     //5 Consecutive face values
-    DiceType itr=dice.begin();
     //Find starting face value
-    Face val = *itr;
+    Face val = dice[0];
     //Iterate to the next die
-    itr++;
     //So we can increment through the enum face class
     int temp=(int)val;
     //Number of consecutive face values
-    for(itr;itr!=dice.end();itr++){
-        if((Face)(temp+1)==*itr){
+    for(int i=1;i<size;i++){
+        if((Face)(temp+1)==dice[i]){
             temp++;
             val=(Face)temp;
         }
@@ -291,10 +271,9 @@ bool Dice::isLStraight(){
 
 bool Dice::isYahtzee(){
     //All 5 die the same
-    DiceType itr=dice.begin();
-    Face face=*itr;
-    for(itr;itr!=dice.end();itr++){
-        if(*itr!=face)return false;
+    Face face=dice[0];
+    for(int i=0;i<size;i++){
+        if(dice[i]!=face)return false;
     }
     return true;
 }
@@ -350,36 +329,29 @@ void Dice::mergeSort(int *array,int beg,int end){
 }
 
 void Dice::sort(){
-    //Convert list of die to array of int
-    int *array=listToArray();
-    //Sort the integer array
-    mergeSort(array,0,size-1);
-    //Convert integer array to list
-    arrayToList(array);
-    delete array;
+    std::sort(&dice[0],&dice[size]);
 }
 
 void Dice::sort(int *array,int len){
     mergeSort(array,0,len);
 }
 
-int* Dice::listToArray(){
-    int *array=new int[size];
-    int indx=0;
-    DiceType itr=dice.begin();
-    for(itr;itr!=dice.end();itr++){
-        array[indx++]=(int)*itr;
+void Dice::arrayToVec(int* array){
+    for(int i=0;i<size;i++){
+        cout<<"array["<<i<<"]="<<array[i]<<endl;
+        dice[i]=(Face)array[i];
+    }
+}
+
+int* Dice::vecToArray(){
+    int* array=new int[size];
+    for(int i=0;i<size;i++){
+        cout<<"dice["<<i<<"]="<<(int)dice[i]<<endl;
+        array[i]=(int)dice[i];
     }
     return array;
 }
 
-void Dice::arrayToList(int *array){
-    int indx=0;
-    DiceType itr = dice.begin();
-    for(itr;itr!=dice.end();itr++){
-        *itr=(Face)array[indx++];
-    }
-}
 
 void Dice::debugDice(){
     dice.clear();

@@ -10,19 +10,20 @@
 
 #include <iostream>
 #include <iomanip>
-#include <list>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <vector>
 #include <map>
+
 #include "Enums.hpp"
 
 using namespace std;
 
 
 class Dice{
-    using DiceType = list<Face>::iterator;
     public:
         Dice();                     //Default constructor
         Dice(int);                  //Constructor with specified number of die
@@ -47,12 +48,12 @@ class Dice{
         void sort();
         void sort(int*,int);
         
-        int* listToArray();
-        void arrayToList(int*);
+        void arrayToVec(int*);
+        int* vecToArray();
         
         void debugDice();               //Developer Debug
     private:
-        list<Face> dice;            //List of die
+        vector<Face> dice;            //List of die
         map<Face,string> picDie;    //ACSII art for each die
         int size;                   //Number of dice
 };
