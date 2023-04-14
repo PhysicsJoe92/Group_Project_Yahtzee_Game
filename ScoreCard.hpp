@@ -36,11 +36,11 @@ class ScoreCard{
         void debugCard();
         
     private:
-        int currGame = 0;
-        static const int numGames = 5;
-        static const int upRows   = 9;
-        static const int lwRows   = 11;
-        static const int bSize    = 13;
+        unsigned char currGame = 0;
+        static const unsigned char numGames = 5;
+        static const unsigned char upRows   = 9;
+        static const unsigned char lwRows   = 11;
+        static const unsigned char bSize    = 13;
         
         //Bit vector to hold if section is filled
         bool bit_vector[bSize];
