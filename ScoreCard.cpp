@@ -63,13 +63,13 @@ void ScoreCard::saveCard(string name){
         return;
     }
     // Save current game
-    out.write(reinterpret_cast<const char*>(&currGame), sizeof(uint16_t));
+    out.write(reinterpret_cast<const char*>(currGame), sizeof(unsigned char));
     
     // Save the upper section
-    out.write(reinterpret_cast<const char*>(upperSec), sizeof(uint16_t));
+    out.write(reinterpret_cast<const char*>(upperSec), sizeof(unsigned char));
     
     // Save the lower section
-    out.write(reinterpret_cast<const char*>(lowerSec), sizeof(uint16_t));
+    out.write(reinterpret_cast<const char*>(lowerSec), sizeof(unsigned char));
     
     out.close();
 }
@@ -81,13 +81,13 @@ void ScoreCard::loadCard(string name){
         return;
     }
     // Load current game
-    in.read(reinterpret_cast<char*>(&currGame), sizeof(uint16_t));
+    in.read(reinterpret_cast<char*>(currGame), sizeof(unsigned char));
     
     // Load the upper section
-    in.read(reinterpret_cast<char*>(upperSec), sizeof(uint16_t));
+    in.read(reinterpret_cast<char*>(upperSec), sizeof(unsigned char));
     
     // Load the lower section
-    in.read(reinterpret_cast<char*>(lowerSec), sizeof(uint16_t));
+    in.read(reinterpret_cast<char*>(lowerSec), sizeof(unsigned char));
     
     in.close();
 }
