@@ -16,6 +16,7 @@
 #include <string>
 #include <stack>
 #include <functional>
+#include <fstream>
 #include "Dice.hpp"
 
 
@@ -38,11 +39,11 @@ class ScoreCard{
         void debugCard();
         
     private:
-        int currGame = 0;
-        static const int numGames = 5;
-        static const int upRows   = 9;
-        static const int lwRows   = 11;
-        static const int bSize    = 13;
+        short currGame = 0;
+        static const short numGames = 5;
+        static const short upRows   = 9;
+        static const short lwRows   = 11;
+        static const short bSize    = 13;
         
         //Bit vector to hold if section is filled
         bool bit_vector[bSize];
@@ -56,7 +57,6 @@ class ScoreCard{
         string upperName[upRows];
         // container to hold lower section names
         string lowerName[lwRows];
-        
 };
 
 #endif /* SCORECARD_H */

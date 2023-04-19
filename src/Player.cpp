@@ -14,12 +14,16 @@ Player::Player(string name){
     userName=name;
     //Open player save file, if no save file exist, create a new file
     fstream file;
-    
-    file.open("saves/" + userName + ".sav", ios::in | ios::out);
+    checkFile();
+    file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
+
 
     if(!isEmpty(file)){card.replaceCard(userName);}
     
     file.close();
+    
+    card.saveCard(userName);
+    
 }
 
 void Player::resetDKeep(int *dieKeep,int keep){
@@ -32,13 +36,12 @@ void Player::setName(string name){
     userName=name;
     //Open player save file, if no save file exist, create a new file
     fstream file;
+    checkFile();
+    file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
     
-    file.open("saves/" + userName + ".sav", ios::in | ios::out);
-
-    if(isEmpty(file)){}//do nothing
-    else card.replaceCard(userName);
+    if(isEmpty(file)){card.saveCard(userName);file.close();}//do nothing
+    else {file.close();card.replaceCard(userName);}
     
-    file.close();
 }
 
 void Player::throwDice(Dice& dice,int keep){
@@ -75,7 +78,9 @@ void Player::takeTurn(Dice dice){
     }
     
     selCat(dice);
+    cout<<"Category selected..."<<endl;
     saveCard();
+    cout<<"Card saved..."<<endl;
 }
 
 bool Player::holdDice(char &hold,int numHold){
@@ -242,7 +247,7 @@ void Player::selCat(Dice dice){
         cout<<setw(21)<<""<<"Select Category: ";
 
         getline(cin,category);
-
+        
         filled = card.setScoreCell(category,dice);
     }while(!filled);
 }
@@ -263,7 +268,10 @@ void Player::setScore(){
 }
 
 bool Player::isEmpty(fstream& file){
-    return file.peek() == fstream::traits_type::eof();
+    file.seekg(0,ios::end);
+    if(file.tellg()==0)return true;
+    return false;
+    //return file.peek() == fstream::traits_type::eof();
 }
 
 bool Player::isPlayerDone(){
@@ -277,4 +285,18 @@ void Player::debugPlayer(Dice dice){
     selCat(dice);
     card.debugCard();
     printCard();
+}
+
+void Player::checkFile(){
+    cout<<"Checking file..."<<endl;
+    fstream file;
+    file.open("saves/" + userName + ".sav", ios::in | ios::binary);
+    if(!file.is_open())createFile();
+    else file.close();
+}
+void Player::createFile(){
+    cout<<"Creating file..."<<endl;
+    fstream file;
+    file.open("saves/" + userName + ".sav", ios::out | ios::binary);
+    file.close();
 }
