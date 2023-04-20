@@ -47,14 +47,12 @@ ScoreCard::ScoreCard(){
     for(int i=0;i<numGames;i++){
         for(int j=0;j<upRows;j++){
             upperSec[i][j]=fillUp[j];
-            cout<<"upperSec["<<i<<"]"<<"["<<j<<"]: "<<upperSec[i][j]<<endl;
         }
     }
     //Initialize Lower Section scores
     for(int i=0;i<numGames;i++){
         for(int j=0;j<lwRows;j++){
             lowerSec[i][j]=fillLw[j];
-            cout<<"lowerSec["<<i<<"]"<<"["<<j<<"]: "<<lowerSec[i][j]<<endl;
         }
     }
 }
@@ -65,33 +63,27 @@ void ScoreCard::saveCard(string name){
     out.open("saves/"+name+".sav",ios::out|ios::binary);
     //Save Current Game
     out.seekp(0,ios::beg);
-    cout<<"currGame: "<<currGame<<endl;
     out.write(reinterpret_cast<char*>(&currGame),sizeof(short));
      
     for(int i=0;i<upRows;i++){
         for(int j=0;j<numGames;j++){
             out.seekp(0,ios::cur);
-            cout<<"pos: "<<out.tellp()<<endl;
-            cout<<"uppserSec: "<<upperSec[j][i]<<endl;
             out.write(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
         }
     }
+    out.clear();
     for(int i=0;i<lwRows;i++){
         for(int j=0;j<numGames;j++){
             out.seekp(0,ios::cur);
-            cout<<out.tellp()<<endl;
-            cout<<"lowerSec: "<<lowerSec[j][i]<<endl;
-            out.write(reinterpret_cast<char*>(lowerSec[j][i]),sizeof(int));
+            out.write(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
         }
     }
-    cout<<"Finished writing to file..."<<endl;
     out.clear();
     out.close();
 }
 
 //Replace score card with saved card if current game 
 void ScoreCard::replaceCard(string name){
-    cout<<"Replacing card..."<<endl;
     fstream in;
     in.open("saves/"+name+".sav",ios::in|ios::binary);
     string temp;
@@ -99,50 +91,22 @@ void ScoreCard::replaceCard(string name){
     //Get current game
     in.seekg(0,ios::beg);
     in.read(reinterpret_cast<char*>(&val),sizeof(short));
-    
     currGame=val+1;
-    
+    cout<<"currgame: "<<currGame<<endl;
     if(currGame<5){
         for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
                 in.seekg(0,ios::cur);
                 in.read(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
-                cout<<"upperSec"<<upperSec[j][i]<<endl;
             }
         }
         for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
                 in.seekg(ios::cur);
                 in.read(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
-                cout<<"lowerSec"<<lowerSec[j][i]<<endl;
             }
         }
     }
-    
-    /*in>>temp;
-    val = stoi(temp);
-    currGame=val+1;
-    //If new game will be 6th game, erase last score card and replace with
-    //default
-    if(currGame<5){
-        //Read upper section
-        for(int i=0;i<upRows;i++){
-            for(int j=0;j<numGames;j++){
-                in>>temp;
-                val = stoi(temp);
-                upperSec[j][i]=val;
-            }
-        }
-        //Read lower section
-        for(int i=0;i<lwRows;i++){
-            for(int j=0;j<numGames;j++){
-                in>>temp;
-                val=stoi(temp);
-                lowerSec[j][i]=val;
-            }
-        }
-    }
-    else currGame=0;*/
     in.close();
 }
 

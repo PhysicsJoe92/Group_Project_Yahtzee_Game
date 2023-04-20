@@ -57,7 +57,8 @@ void Game::start(){
     }
     //Put players in the vector using emplace_back instead of using queue
     for(int i=0;i<numP;i++){
-        players.emplace_back(names[i]);
+        Player temp(names[i]);
+        players.emplace_back(temp);
     }
 }
 

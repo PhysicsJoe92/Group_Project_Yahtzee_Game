@@ -39,8 +39,8 @@ void Player::setName(string name){
     checkFile();
     file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
     
-    if(isEmpty(file)){card.saveCard(userName);file.close();}//do nothing
-    else {file.close();card.replaceCard(userName);}
+    if(isEmpty(file)){cout<<"Empty card..."<<endl;file.close();}//do nothing
+    else {file.close();cout<<"card filled"<<endl;card.replaceCard(userName);}
     
 }
 
