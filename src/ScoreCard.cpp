@@ -64,21 +64,22 @@ void ScoreCard::saveCard(string name){
     //Save Current Game
     out.seekp(0,ios::beg);
     out.write(reinterpret_cast<char*>(&currGame),sizeof(short));
-     
+    long cursor=out.tellg();
     for(int i=0;i<upRows;i++){
         for(int j=0;j<numGames;j++){
-            out.seekp(0,ios::cur);
+            out.seekp(cursor,ios::beg);
             out.write(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
+            cursor+=sizeof(int);
         }
     }
-    out.clear();
     for(int i=0;i<lwRows;i++){
         for(int j=0;j<numGames;j++){
-            out.seekp(0,ios::cur);
+            out.seekp(cursor,ios::beg);
             out.write(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
+            cursor+=sizeof(int);
         }
     }
-    out.clear();
+    
     out.close();
 }
 
@@ -92,21 +93,24 @@ void ScoreCard::replaceCard(string name){
     in.seekg(0,ios::beg);
     in.read(reinterpret_cast<char*>(&val),sizeof(short));
     currGame=val+1;
-    cout<<"currgame: "<<currGame<<endl;
+    long cursor=in.tellg();
     if(currGame<5){
         for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
-                in.seekg(0,ios::cur);
+                in.seekg(cursor,ios::beg);
                 in.read(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
+                cursor+=sizeof(int);
             }
         }
         for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
-                in.seekg(ios::cur);
+                in.seekg(cursor,ios::beg);
                 in.read(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
+                cursor+=sizeof(int);
             }
         }
     }
+    else currGame=0;
     in.close();
 }
 
@@ -181,7 +185,6 @@ bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
     Face val;
     
     scoreSec=format(scoreSec);
-    cout<<(int)currGame<<endl;
     //Upper Section
     //Count all ones
     if(scoreSec.compare(upperName[0])==0 && bit_vector[0]!=1){

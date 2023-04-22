@@ -67,7 +67,7 @@ void Player::throwDice(Dice& dice,int keep){
 void Player::takeTurn(Dice dice){
     int turns=0;
     int keep=0;
-    cout<<"\n \n";
+    cout<<"\n\n";
     cout<<setw(21)<<""<<userName<<"'s Turn:"<<endl;
     
     while(keep!=5 && turns<3){
@@ -78,9 +78,7 @@ void Player::takeTurn(Dice dice){
     }
     
     selCat(dice);
-    cout<<"Category selected..."<<endl;
     saveCard();
-    cout<<"Card saved..."<<endl;
 }
 
 bool Player::holdDice(char &hold,int numHold){
@@ -249,6 +247,10 @@ void Player::selCat(Dice dice){
         getline(cin,category);
         
         filled = card.setScoreCell(category,dice);
+        if(!filled){
+            cout<<"Press ENTER to continue..."<<endl;
+            cin.ignore(1000,'\n');
+        }
     }while(!filled);
 }
 
@@ -276,7 +278,7 @@ bool Player::isEmpty(fstream& file){
 
 bool Player::isPlayerDone(){
     bool done=card.isCardFull();
-    if(done){card.saveCard(userName);}
+    //if(done){card.saveCard(userName);}
     return done;
 }
 
@@ -288,14 +290,12 @@ void Player::debugPlayer(Dice dice){
 }
 
 void Player::checkFile(){
-    cout<<"Checking file..."<<endl;
     fstream file;
     file.open("saves/" + userName + ".sav", ios::in | ios::binary);
     if(!file.is_open())createFile();
     else file.close();
 }
 void Player::createFile(){
-    cout<<"Creating file..."<<endl;
     fstream file;
     file.open("saves/" + userName + ".sav", ios::out | ios::binary);
     file.close();
