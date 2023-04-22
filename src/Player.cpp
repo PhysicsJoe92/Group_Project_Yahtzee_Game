@@ -14,12 +14,16 @@ Player::Player(string name){
     userName=name;
     //Open player save file, if no save file exist, create a new file
     fstream file;
-    
-    file.open("saves/" + userName + ".sav", ios::in | ios::out);
+    checkFile();
+    file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
+
 
     if(!isEmpty(file)){card.replaceCard(userName);}
     
     file.close();
+    
+    card.saveCard(userName);
+    
 }
 
 void Player::resetDKeep(int *dieKeep,int keep){
@@ -32,13 +36,12 @@ void Player::setName(string name){
     userName=name;
     //Open player save file, if no save file exist, create a new file
     fstream file;
+    checkFile();
+    file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
     
-    file.open("saves/" + userName + ".sav", ios::in | ios::out);
-
-    if(isEmpty(file)){}//do nothing
-    else card.replaceCard(userName);
+    if(isEmpty(file)){cout<<"Empty card..."<<endl;file.close();}//do nothing
+    else {file.close();cout<<"card filled"<<endl;card.replaceCard(userName);}
     
-    file.close();
 }
 
 void Player::throwDice(Dice& dice,int keep){
@@ -64,7 +67,7 @@ void Player::throwDice(Dice& dice,int keep){
 void Player::takeTurn(Dice dice){
     int turns=0;
     int keep=0;
-    cout<<"\n \n";
+    cout<<"\n\n";
     cout<<setw(21)<<""<<userName<<"'s Turn:"<<endl;
     
     while(keep!=5 && turns<3){
@@ -242,8 +245,12 @@ void Player::selCat(Dice dice){
         cout<<setw(21)<<""<<"Select Category: ";
 
         getline(cin,category);
-
+        
         filled = card.setScoreCell(category,dice);
+        if(!filled){
+            cout<<"Press ENTER to continue..."<<endl;
+            cin.ignore(1000,'\n');
+        }
     }while(!filled);
 }
 
@@ -263,12 +270,15 @@ void Player::setScore(){
 }
 
 bool Player::isEmpty(fstream& file){
-    return file.peek() == fstream::traits_type::eof();
+    file.seekg(0,ios::end);
+    if(file.tellg()==0)return true;
+    return false;
+    //return file.peek() == fstream::traits_type::eof();
 }
 
 bool Player::isPlayerDone(){
     bool done=card.isCardFull();
-    if(done){card.saveCard(userName);}
+    //if(done){card.saveCard(userName);}
     return done;
 }
 
@@ -277,4 +287,16 @@ void Player::debugPlayer(Dice dice){
     selCat(dice);
     card.debugCard();
     printCard();
+}
+
+void Player::checkFile(){
+    fstream file;
+    file.open("saves/" + userName + ".sav", ios::in | ios::binary);
+    if(!file.is_open())createFile();
+    else file.close();
+}
+void Player::createFile(){
+    fstream file;
+    file.open("saves/" + userName + ".sav", ios::out | ios::binary);
+    file.close();
 }

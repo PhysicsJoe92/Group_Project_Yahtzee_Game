@@ -57,7 +57,8 @@ void Game::start(){
     }
     //Put players in the vector using emplace_back instead of using queue
     for(int i=0;i<numP;i++){
-        players.emplace_back(names[i]);
+        Player temp(names[i]);
+        players.emplace_back(temp);
     }
 }
 
@@ -118,14 +119,15 @@ void Game::printCard(Player currPlayer){
     cout<<setw(21)<<""<<"Would you like to view your score card?"<<endl;
     cout<<setw(21)<<""<<"Enter Yes/No: ";
     string ans;
-    getline(cin,ans);
+    cin>>ans;
     ans = ScoreCard::format(ans);
     if(ans!="Yes" && ans!="No"){
-        getline(cin,ans);
+        cin>>ans;
     }
     if(ans=="Yes"){
         currPlayer.printCard();
     }
+    cin.ignore(1000,'\n');
 }
 
 void Game::pause(){
@@ -168,6 +170,7 @@ bool Game::playAgain(){
     cout<<setw(21)<<"";
     getline(cin,ans);
     ans=ScoreCard::format(ans);
+    players.clear();
     if(ans=="Yes") return true;
     return false;
 }

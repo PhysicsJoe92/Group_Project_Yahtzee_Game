@@ -22,6 +22,8 @@ class Player{
         void takeTurn(Dice);
         void saveCard();
         void setScore();
+        void checkFile();
+        void createFile();
         int keepDice();
         
         bool isEmpty(fstream&);

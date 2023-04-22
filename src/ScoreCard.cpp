@@ -2,7 +2,7 @@
  * 
  * 
  */
-
+#include <thread>
 #include "ScoreCard.hpp"
 //Default Constructor
 //Set each of the sections with their appropriate names and initialize each
@@ -37,9 +37,12 @@ ScoreCard::ScoreCard(){
     }
     int fillUp[upRows];
     int fillLw[lwRows];
-    fill(fillUp,fillUp+upRows,-1);
-    fill(fillLw,fillLw+lwRows,-1);
-    
+    for(int i=0;i<upRows;i++){
+        fillUp[i]=-1;
+    }
+    for(int i=0;i<lwRows;i++){
+        fillLw[i]=-1;
+    }
     //Initialize Upper Section scores
     for(int i=0;i<numGames;i++){
         for(int j=0;j<upRows;j++){
@@ -57,54 +60,53 @@ ScoreCard::ScoreCard(){
 //Save the score card to a file with player name
 void ScoreCard::saveCard(string name){
     fstream out;
-    out.open("saves/"+name+".sav",ios::out);
+    out.open("saves/"+name+".sav",ios::out|ios::binary);
     //Save Current Game
-    out<<getCurrGame()<<endl;
-    
-    //Save the upper section
+    out.seekp(0,ios::beg);
+    out.write(reinterpret_cast<char*>(&currGame),sizeof(short));
+    long cursor=out.tellg();
     for(int i=0;i<upRows;i++){
         for(int j=0;j<numGames;j++){
-            out<<upperSec[j][i]<<" ";
+            out.seekp(cursor,ios::beg);
+            out.write(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
+            cursor+=sizeof(int);
         }
-        out<<endl;
     }
-    //Save the lower section
     for(int i=0;i<lwRows;i++){
         for(int j=0;j<numGames;j++){
-            out<<lowerSec[j][i]<<" ";
+            out.seekp(cursor,ios::beg);
+            out.write(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
+            cursor+=sizeof(int);
         }
-        out<<endl;
     }
+    
     out.close();
 }
 
 //Replace score card with saved card if current game 
 void ScoreCard::replaceCard(string name){
     fstream in;
-    in.open("saves/"+name+".sav",ios::in);
+    in.open("saves/"+name+".sav",ios::in|ios::binary);
     string temp;
-    int val;
+    short val;
     //Get current game
-    in>>temp;
-    val = stoi(temp);
+    in.seekg(0,ios::beg);
+    in.read(reinterpret_cast<char*>(&val),sizeof(short));
     currGame=val+1;
-    //If new game will be 6th game, erase last score card and replace with
-    //default
+    long cursor=in.tellg();
     if(currGame<5){
-        //Read upper section
         for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
-                in>>temp;
-                val = stoi(temp);
-                upperSec[j][i]=val;
+                in.seekg(cursor,ios::beg);
+                in.read(reinterpret_cast<char*>(&upperSec[j][i]),sizeof(int));
+                cursor+=sizeof(int);
             }
         }
-        //Read lower section
-        for(int i=0;i<lwRows;i++){
+        for(int i=0;i<upRows;i++){
             for(int j=0;j<numGames;j++){
-                in>>temp;
-                val=stoi(temp);
-                lowerSec[j][i]=val;
+                in.seekg(cursor,ios::beg);
+                in.read(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));
+                cursor+=sizeof(int);
             }
         }
     }
@@ -181,7 +183,7 @@ void ScoreCard::printCategories(){
 
 bool ScoreCard::setScoreCell(string scoreSec, Dice dice){
     Face val;
-
+    
     scoreSec=format(scoreSec);
     //Upper Section
     //Count all ones
