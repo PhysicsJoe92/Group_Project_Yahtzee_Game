@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.cc to edit this template
  */
 #include "Game.hpp"
-#include "Menu.hpp"
 
 Game::Game(){
     numP=1;
@@ -16,50 +15,39 @@ void Game::start(){
     int temp;
     string name;
     
+    //Get users to sign-in
+    //Once signed in, create a lobby for all players 
+    //(get random key put into 8-byte char array) -> get hex val
+    //User/Admin is needed. Just create an admin class that is friends with
+    //player. This way we can pull the information we want and utilize the existing
+    //code for reading/writing. Admin will have access to ALL Player member
+    //variables AND functions (private, public, protected). This will give the
+    //admin FULL privilege rights.
+    //We will need to add a function to log-in, this will create a separate file
+    //that will store user name (SHA1 hash) and password (SHA256 hash) and user
+    //privilege (admin/standard). We will have options for players to add more players
+    //or to play the game (1-4 players). 
     
-    //Get the number of players
-    cout<<setw(21)<<""<<"Enter the number of players: ";
-    cin>>temp;
-    while(temp<1 || temp>4){
-        if(temp<1)cout<<setw(21)<<""<<"Needs at least 1 player."<<endl;
-        else cout<<setw(21)<<""<<"Maximum number of 4 players."<<endl;
-        cin>>temp;
-    }
-    
-    numP=temp;
-    string names[numP];
-    cout<<setw(21)<<""<<"Enter player name: "<<endl;
-    cin.ignore(1000,'\n');
-    for(int i=0;i<numP;i++){
-        //Get name of each player
-        cout<<setw(21)<<"";
-        getline(cin,name);
-        //Put players into vector
-        names[i]=name;
-    }
-    
-    if(numP>1){
-        cout<<setw(21)<<""<<"Randomizing player rotation"<<endl;
-        for(int i=0;i<5;i++){
-            for(int j=0;j<numP;j++){
-                //Swap names
-                int indx1=rand()%numP;
-                int indx2=rand()%numP;
-                while(indx2==indx1)indx2=rand()%numP;
-
-                //Swap
-                string tName=names[indx1];
-                names[indx1]=names[indx2];
-                names[indx2]=tName;
-
-            }
+    //Check if etc/passwd.bin exist
+    checkFile();
+    int choice;
+    do{
+        choice=loginMenu();
+        switch(choice){
+            case 1: addPlayer();break;//Add user (login)
+            case 2: createPlayer();break;//Create new user
+            case 3: 
+                if(players.size()<1){
+                    cout<<"No Players in Queue..."<<endl;
+                    break;
+                }
+                else{
+                    play();//Play game -> play()
+                    break;
+                }
         }
-    }
-    //Put players in the vector using emplace_back instead of using queue
-    for(int i=0;i<numP;i++){
-        Player temp(names[i]);
-        players.emplace_back(temp);
-    }
+    }while(choice!=4);
+    
 }
 
 void Game::play(){
@@ -113,7 +101,6 @@ void Game::play(){
         currPlayer.printCard();
     }
 }
-
 void Game::printCard(Player currPlayer){
     cout<<setw(21)<<""<<currPlayer.getName()<<", "<<endl;
     cout<<setw(21)<<""<<"Would you like to view your score card?"<<endl;
@@ -129,17 +116,14 @@ void Game::printCard(Player currPlayer){
     }
     cin.ignore(1000,'\n');
 }
-
 void Game::pause(){
     char key;
     cout<<setw(21)<<""<<"Press ENTER to continue...   ";
     cin.get();
 }
-
 void Game::end(){
     menu.printExit();
 }
-
 bool Game::gameMenu(bool &debugGame){
     int dec;
     
@@ -163,7 +147,6 @@ bool Game::gameMenu(bool &debugGame){
     else if(dec==1) return true;
     return false;
 }
-
 bool Game::playAgain(){
     cout<<setw(21)<<""<<"Would you like to play another game?(Yes/No)"<<endl;
     string ans;
@@ -174,7 +157,6 @@ bool Game::playAgain(){
     if(ans=="Yes") return true;
     return false;
 }
-
 bool Game::gameOver(){
     Player player;
     bool gameOver;
@@ -186,10 +168,222 @@ bool Game::gameOver(){
     }
     return gameOver;
 }
+int Game::loginMenu(){
+    int choice;
+    
+    do{
+        menu.printLogin();
+        cin>>choice;
+        cin.ignore(1000,'\n');
+    }
+    while(choice>3 && choice<1);
+    
+    return choice;
+}
+void Game::addPlayer(){
+    if(numP<=4){
+        fstream file;
+        file.open("etc/passwd.bin",ios::in|ios::binary);
+        long cursor=0L;
+        Scanner sc;
+        //Give a login screen that will ask for the username/password
+        cout<<"Enter username: ";
+        char* uname=sc.nextChar();
+        //Search for username
+        if(usernameCheck(file,uname)){
+            cout<<"Enter password: ";
+            char* password=sc.nextChar();
+            if(!validPassword(file,password)){
+                cout<<"Invalid Password"<<endl;
+            }
+            else{
+                //Check privilege level
+                Privilege priv=getPrivilege(file);
+                if(priv==Privilege::Admin){
+                    //Admin menu
+                }
+                else{
+                    //Get the user ID
+                    unsigned int id=getID(file);
+                    //Add the player into the queue
+                    Player player(uname,id);
+                    players.push_back(player);
+                    //Randomize players
+                    if(players.size()>1){
+                        int index1=rand()%players.size();
+                        int index2=rand()%players.size();
+                        while(index1==index2){
+                            index2=rand()%players.size();
+                        }
+                        //Swap players
+                        Player temp=players[index1];
+                        players[index1]=players[index2];
+                        players[index2]=temp;
+                    }
+                }
+            }
+            delete[] password;
+        }
+        else{
+            cout<<"No User Name on Record"<<endl;
+        }
+        file.close();
+        delete[] uname;
+        numP=players.size();
+    }
+}
+void Game::createPlayer(){
+    //Get username/password, set priv to standard, get userID from last
+    //userId from file - increment to set ID
+    Player player;
+    Scanner sc;
+    fstream file;
+    file.open("etc/passwd.bin",ios::in|ios::binary);
+
+    cout<<"Enter username: ";
+    char* userName=sc.nextChar();
+    //Make sure username doesnt already exists
+    if(!usernameCheck(file,userName)){
+        cout<<"Enter password: ";
+        char* password=sc.nextChar();
+        //Validate password
+        while(!passwordFormat(password)){
+            delete[] password;
+            password=sc.nextChar();
+        }
+        //Hash username/password
+        SHA1 nameHash(userName);
+        SHA256 passHash(password);
+        char* nameDigest=(char*)nameHash.getDigest();
+        char* passDigest=(char*)passHash.getDigest();
+
+        //Set privilege
+        Privilege priv=Privilege::Standard;
+        //Set user ID
+        unsigned int id=setID();
+        //Save to passwd.bin file
+        fstream file;
+        file.open("etc/passwd.bin",ios::out|ios::binary|ios::app);
+        file.seekp(0,ios::end);
+        file.write(nameDigest,sizeof(char)*20);
+        file.write(passDigest,sizeof(char)*32);
+        file.write(reinterpret_cast<char*>(&priv),sizeof(int));
+        file.write(reinterpret_cast<char*>(&id),sizeof(unsigned int));
+        file.close();
+
+        fstream pFile;
+        string name=userName;
+        string userID=to_string(id);
+        string fileName="saves/" + name + "_" + userID +".sav";
+        pFile.open(fileName,ios::out|ios::binary);
+    }
+    else{
+        cout<<"Username already exist..."<<endl;
+    }
+}
+bool Game::usernameCheck(fstream& file,char* userName){
+    //Search through the file to see if the userName exists, if it does return true
+    //else return false
+    SHA1 hash(userName);
+    char* digest=(char*)hash.getDigest();
+    long cur=file.tellg();
+    long cursor=0L;
+    file.seekg(0,std::ios::end);
+    int size=file.tellg();
+    char tmp[20];
+    int userNameBlock=0;
+    while(cursor<size){
+        //Iterate through the file, grab each userName hash and compare
+        file.seekg(cursor,std::ios::beg);
+        file.read(tmp,sizeof(char)*20);
+        
+        if(memcmp(digest,tmp,sizeof(char)*20)==0){
+            return true;
+        }
+        else{
+            cursor+=((sizeof(char)*20)+(sizeof(char)*32)+sizeof(int)+sizeof(unsigned int));
+        }
+    }
+    //delete[] tmp;
+    file.clear();
+    file.seekg(cur,std::ios::beg);
+    //Since the userName doesnt exist, we can place the file pointer back to read
+    //the previous user ID, this will allow us to increment the uID
+
+    return false;
+
+}
+bool Game::passwordFormat(char* passwd){
+    //Password needs capital letter, lower case letter, number, length and
+    //special character (! @ # $ &)
+    //Use some sort of bit manip to check if all categories are set
+    // x x x | _ _ _ _ _ -> last 5 bits will represent out conditions
+    char passSet=0;
+    int len = strlen(passwd);
+    if(len>=8){
+        passSet|=16;
+    }
+    for(int i=0;i<len;i++){
+        if(isupper(passwd[i]))
+            passSet|=8;
+        if(islower(passwd[i]))
+            passSet|=4;
+        if(isdigit(passwd[i]))
+            passSet|=2;
+        if((passwd[i]=='!') || (passwd[i]=='@')
+            || (passwd[i]=='#') || (passwd[i]=='$')
+                || (passwd[i]=='&'))
+            passSet|=1;
+    }
+    if(passSet!=31){
+        std::cout<<"Password criteria not met"<<std::endl;
+        std::cout<<"Need:\n\tCapital Letter\n\tLower Case Letter"
+                "\n\tNumber\n\tSpecial Character(! @ # $ &)"<<std::endl;
+        return false;
+    }
+    return true;
+}
+bool Game::validPassword(fstream& file,char* password){
+    SHA256 hash(password);
+    char* digest=(char*)hash.getDigest();
+    char fileDigest[32];
+    
+    file.seekg(0,ios::cur);
+    file.read(fileDigest,sizeof(char)*32);
+    if(memcmp(fileDigest,digest,sizeof(char)*32)==0){
+        return true;
+    }
+    return false;
+}
+Privilege Game::getPrivilege(fstream& file){
+    Privilege priv;
+    file.seekg(0,ios::cur);
+    file.read(reinterpret_cast<char*>(&priv),sizeof(int));
+    return priv;
+}
+unsigned int Game::setID(){
+    fstream file;
+    unsigned int id;
+    file.open("etc/passwd.bin",ios::in|ios::binary);
+    //We know the last user id is stored in the last 32 bit chunk of the user block
+    //So we can open the file -32 bits from the end of the file
+    long cursor=-(sizeof(unsigned int));
+    file.seekp(cursor,ios::end);
+    file.read(reinterpret_cast<char*>(&id),sizeof(unsigned int));
+    file.close();
+    id++;
+    return id;
+}
+unsigned int Game::getID(fstream& file){
+    unsigned int id;
+    file.seekg(0,ios::cur);
+    file.read(reinterpret_cast<char*>(&id),sizeof(unsigned int));
+    return id;
+}
 
 void Game::debugGame(){
     //Create a fake player
-    Player player("Debug");
+    Player player("Debug",0);
     numP=1;
     players[0]=player;
     Player currPlayer=players[0];
@@ -204,4 +398,39 @@ void Game::debugGame(){
     cout<<"currPlayer="<<currPlayer.getName()<<endl;
     cout<<"score="<<score<<endl;
     currPlayer.saveCard();
+}
+
+void Game::checkFile(){
+    fstream file;
+    file.open("etc/passwd.bin",ios::in|ios::binary);
+    if(!file.is_open()){
+        createFile();
+    }
+    else{
+        file.close();
+    }
+}
+void Game::createFile(){
+    fstream file;
+    file.open("etc/passwd.bin",ios::out|ios::binary);
+    
+    //Create admin user
+    char name[] = "admin";
+    char password[] = "password";
+    Privilege priv=Privilege::Admin;
+    unsigned int userID=0;
+    //Hash username
+    SHA1 nameHash(name);
+    char* nameDigest=(char*)nameHash.getDigest();
+    //Hash password
+    SHA256 passwdHash(password);
+    char* passwdDigest=(char*)passwdHash.getDigest();
+    
+    file.seekp(0,ios::beg);
+    file.write(nameDigest,sizeof(char)*20);
+    file.write(passwdDigest,sizeof(char)*32);
+    file.write(reinterpret_cast<char*>(&priv),sizeof(int));
+    file.write(reinterpret_cast<char*>(&userID),sizeof(unsigned int));
+
+    file.close();
 }

@@ -25,8 +25,8 @@ class ScoreCard{
         ScoreCard();//Default Constructor
         void printScoreCard();
         void printCategories();
-        void saveCard(string);
-        void replaceCard(string);
+        void saveCard(string,string);
+        void replaceCard(string,string);
         int getScore();
         
         bool setScoreCell(string,Dice);

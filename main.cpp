@@ -22,7 +22,6 @@ int main(int argc, char** argv) {
     
     while(playGame){
         game.start();
-        game.play();
         playGame = game.playAgain();
     }
     

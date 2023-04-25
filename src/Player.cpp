@@ -10,19 +10,21 @@ Player::Player(){
     userName="";
 }
 
-Player::Player(string name){
+Player::Player(string name,unsigned int pID){
     userName=name;
+    playerID=pID;
     //Open player save file, if no save file exist, create a new file
     fstream file;
     checkFile();
-    file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
+    string ID=to_string(playerID);
+    string fileName= "saves/" + userName + "_" + ID +".sav";
+    file.open(fileName,ios::in|ios::out|ios::binary);
 
-
-    if(!isEmpty(file)){card.replaceCard(userName);}
+    if(!isEmpty(file)){card.replaceCard(userName,ID);}
     
     file.close();
     
-    card.saveCard(userName);
+    card.saveCard(userName,ID);
     
 }
 
@@ -40,7 +42,12 @@ void Player::setName(string name){
     file.open("saves/" + userName + ".sav", ios::in | ios::out | ios::binary);
     
     if(isEmpty(file)){cout<<"Empty card..."<<endl;file.close();}//do nothing
-    else {file.close();cout<<"card filled"<<endl;card.replaceCard(userName);}
+    else {
+        file.close();
+        cout<<"card filled"<<endl;
+        string id=to_string(playerID);
+        card.replaceCard(userName,id);
+    }
     
 }
 
@@ -262,7 +269,8 @@ void Player::printCard(){
 }
 
 void Player::saveCard(){
-    card.saveCard(userName);
+    string id=to_string(playerID);
+    card.saveCard(userName,id);
 }
 
 void Player::setScore(){
@@ -291,12 +299,14 @@ void Player::debugPlayer(Dice dice){
 
 void Player::checkFile(){
     fstream file;
-    file.open("saves/" + userName + ".sav", ios::in | ios::binary);
+    string id=to_string(playerID);
+    file.open("saves/" + userName + "_" + id +".sav", ios::in | ios::binary);
     if(!file.is_open())createFile();
     else file.close();
 }
 void Player::createFile(){
     fstream file;
-    file.open("saves/" + userName + ".sav", ios::out | ios::binary);
+    string id=to_string(playerID);
+    file.open("saves/" + userName + "_" + id +".sav", ios::in | ios::binary);
     file.close();
 }

@@ -8,27 +8,29 @@
 #include "Menu.hpp"
 
 Menu::Menu(){
-    string mainMenu, rules, ending;
+    string mainMenu, rules, login, ending;
     getline(fstream("res/Menu/MainMenu.txt"),mainMenu,'\0');
-    menuSys.insert(mainMenu);
+    menuSys[0]=mainMenu;
     getline(fstream("res/Menu/Rules.txt"),rules,'\0');
-    menuSys.insert(rules);
+    menuSys[1]=rules;
+    getline(fstream("res/Menu/LoginMenu.txt"),login,'\0');
+    menuSys[2]=login;
     getline(fstream("res/Menu/End.txt"),ending,'\0');
-    menuSys.insert(ending);
+    menuSys[3]=ending;
 }
 
 void Menu::printMainMenu(){
-    menuSys.print(0);
-    cout<<endl;
+    cout<<menuSys[0]<<endl;
 }
 
 void Menu::printRules(){
-    menuSys.print(1);
-    cout<<endl;
+    cout<<menuSys[1]<<endl;
+}
+
+void Menu::printLogin(){
+    cout<<menuSys[2]<<endl;
 }
 
 void Menu::printExit(){
-    cout<<endl<<endl;
-    menuSys.print(2);
-    cout<<endl;
+    cout<<endl<<endl<<menuSys[3]<<endl;
 }

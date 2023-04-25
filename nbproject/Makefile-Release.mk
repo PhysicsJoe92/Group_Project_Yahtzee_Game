@@ -41,6 +41,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/Menu.o \
 	${OBJECTDIR}/src/Player.o \
+	${OBJECTDIR}/src/SHA1.o \
+	${OBJECTDIR}/src/SHA256.o \
+	${OBJECTDIR}/src/Scanner.o \
 	${OBJECTDIR}/src/ScoreCard.o
 
 
@@ -132,6 +135,21 @@ ${OBJECTDIR}/src/Player.hpp.gch: src/Player.hpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Player.hpp
+
+${OBJECTDIR}/src/SHA1.o: src/SHA1.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SHA1.o src/SHA1.cpp
+
+${OBJECTDIR}/src/SHA256.o: src/SHA256.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SHA256.o src/SHA256.cpp
+
+${OBJECTDIR}/src/Scanner.o: src/Scanner.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Scanner.o src/Scanner.cpp
 
 ${OBJECTDIR}/src/ScoreCard.o: src/ScoreCard.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

@@ -13,7 +13,7 @@
 class Player{
     public:
         Player();
-        Player(string);
+        Player(string,unsigned int);
         void resetDKeep(int*,int);
         void setName(string);
         void selCat(Dice);
@@ -38,6 +38,7 @@ class Player{
         int numWins=0;
         string userName;
         ScoreCard card;
+        unsigned int playerID;
         bool holdDice(char&,int);
         int *holdCheck(char,int);
 };
