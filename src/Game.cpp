@@ -37,7 +37,7 @@ void Game::start(){
             case 2: createPlayer();break;//Create new user
             case 3: 
                 if(players.size()<1){
-                    cout<<"No Players in Queue..."<<endl;
+                    cout<<setw(21)<<""<<"No Players in Queue..."<<endl;
                     break;
                 }
                 else{
@@ -170,6 +170,7 @@ int Game::loginMenu(){
     
     do{
         menu.printLogin();
+        cout<<setw(32)<<"Selection: ";
         cin>>choice;
         cin.ignore(1000,'\n');
     }
@@ -184,14 +185,14 @@ void Game::addPlayer(){
         long cursor=0L;
         Scanner sc;
         //Give a login screen that will ask for the username/password
-        cout<<"Enter username: ";
+        cout<<setw(21)<<" "<<"Enter username: ";
         char* uname=sc.nextChar();
         //Search for username
         if(usernameCheck(file,uname)){
-            cout<<"Enter password: ";
+            cout<<setw(21)<<" "<<"Enter password: ";
             char* password=sc.nextChar();
             if(!validPassword(file,password)){
-                cout<<"Invalid Password"<<endl;
+                cout<<setw(21)<<" "<<"Invalid Password"<<endl;
             }
             else{
                 //Check privilege level
@@ -222,7 +223,7 @@ void Game::addPlayer(){
             delete[] password;
         }
         else{
-            cout<<"No User Name on Record"<<endl;
+            cout<<setw(21)<<" "<<"No User Name on Record"<<endl;
         }
         file.close();
         delete[] uname;
