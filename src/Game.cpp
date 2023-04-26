@@ -61,11 +61,9 @@ void Game::play(){
         int currentPlayerIndex = 0;
         
         while(!endGame){
-            //Continue?
-            Player currPlayer = players[currentPlayerIndex];
-            pause();
-            currPlayer.takeTurn(dice);
-            if(!currPlayer.isPlayerDone())printCard(currPlayer);
+            players[currentPlayerIndex].takeTurn(dice);
+            if(!players[currentPlayerIndex].isPlayerDone())
+                printCard(players[currentPlayerIndex]);
             pause();
             currentPlayerIndex = (currentPlayerIndex + 1) % numP;
             endGame=gameOver();
