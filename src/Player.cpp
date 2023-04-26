@@ -13,6 +13,7 @@ Player::Player(){
 Player::Player(string name,unsigned int pID){
     userName=name;
     playerID=pID;
+    
     //Open player save file, if no save file exist, create a new file
     fstream file;
     checkFile();
@@ -24,8 +25,7 @@ Player::Player(string name,unsigned int pID){
     
     file.close();
     
-    card.saveCard(userName,ID);
-    
+    saveCard();
 }
 
 void Player::resetDKeep(int *dieKeep,int keep){
@@ -197,7 +197,6 @@ bool Player::holdDice(char &hold,int numHold){
     //Return true for valid entry//
     return true;
 }
-
 int* Player::holdCheck(char hold,int numHold){
     int *index=new int[numHold];
     int count=0;
@@ -230,7 +229,6 @@ int* Player::holdCheck(char hold,int numHold){
     }
     return index;
 }
-
 int Player::keepDice(){
     int keep;
     cout<<setw(21)<<""<<"Enter how may dice you would like to keep:"<<endl;
@@ -241,7 +239,6 @@ int Player::keepDice(){
     return keep;
 
 }
-
 void Player::selCat(Dice dice){
     string category;
     
@@ -260,28 +257,21 @@ void Player::selCat(Dice dice){
         }
     }while(!filled);
 }
-
 void Player::printCard(){
     cout<<endl;
     cout<<setw(21)<<""<<userName<<": ";
     card.printScoreCard();
     cout<<endl<<endl;
 }
-
 void Player::saveCard(){
     string id=to_string(playerID);
     card.saveCard(userName,id);
 }
-
 void Player::setScore(){
     score=card.getScore();
 }
-
 bool Player::isEmpty(fstream& file){
-    file.seekg(0,ios::end);
-    if(file.tellg()==0)return true;
-    return false;
-    //return file.peek() == fstream::traits_type::eof();
+    return file.peek() == fstream::traits_type::eof();
 }
 
 bool Player::isPlayerDone(){

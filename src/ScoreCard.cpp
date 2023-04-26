@@ -83,10 +83,10 @@ void ScoreCard::saveCard(string name,string id){
     out.close();
 }
 
-//Replace score card with saved card if current game 
+//Replace score card with saved card if current game <5
 void ScoreCard::replaceCard(string name,string id){
     fstream in;
-    in.open("saves/" + name + "_" + id +".sav", ios::in | ios::binary);
+    in.open("saves/" + name + "_" + id +".sav", ios::in | ios::out | ios::binary);
     string temp;
     short val;
     //Get current game
@@ -102,7 +102,8 @@ void ScoreCard::replaceCard(string name,string id){
                 cursor+=sizeof(int);
             }
         }
-        for(int i=0;i<upRows;i++){
+        cout<<endl;
+        for(int i=0;i<lwRows;i++){
             for(int j=0;j<numGames;j++){
                 in.seekg(cursor,ios::beg);
                 in.read(reinterpret_cast<char*>(&lowerSec[j][i]),sizeof(int));

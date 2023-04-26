@@ -20,11 +20,7 @@ int main(int argc, char** argv) {
         return 0;
     }
     
-    while(playGame){
-        game.start();
-        playGame = game.playAgain();
-    }
-    
+    game.start();
     game.end();
     
     return 0;

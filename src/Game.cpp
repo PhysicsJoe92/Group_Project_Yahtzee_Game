@@ -31,6 +31,7 @@ void Game::start(){
     //Check if etc/passwd.bin exist
     checkFile();
     int choice;
+    bool again;
     do{
         choice=loginMenu();
         switch(choice){
@@ -43,10 +44,11 @@ void Game::start(){
                 }
                 else{
                     play();//Play game -> play()
+                    again=playAgain();
                     break;
                 }
         }
-    }while(choice!=4);
+    }while((choice!=4) && (again));
     
 }
 
