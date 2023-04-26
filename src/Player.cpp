@@ -33,7 +33,6 @@ void Player::resetDKeep(int *dieKeep,int keep){
         dieKeep[i]=-1;
     }
 }
-
 void Player::setName(string name){
     userName=name;
     //Open player save file, if no save file exist, create a new file
@@ -50,7 +49,6 @@ void Player::setName(string name){
     }
     
 }
-
 void Player::throwDice(Dice& dice,int keep){
     if(keep==0) dice.rollDice();
     else{
@@ -70,7 +68,6 @@ void Player::throwDice(Dice& dice,int keep){
         delete []diceKept;
     }
 }
-
 void Player::takeTurn(Dice dice){
     int turns=0;
     int keep=0;
@@ -87,7 +84,6 @@ void Player::takeTurn(Dice dice){
     selCat(dice);
     saveCard();
 }
-
 bool Player::holdDice(char &hold,int numHold){
     char *buffer;
     char* input;
