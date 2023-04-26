@@ -16,8 +16,6 @@ void Game::start(){
     string name;
     
     //Get users to sign-in
-    //Once signed in, create a lobby for all players 
-    //(get random key put into 8-byte char array) -> get hex val
     //User/Admin is needed. Just create an admin class that is friends with
     //player. This way we can pull the information we want and utilize the existing
     //code for reading/writing. Admin will have access to ALL Player member
@@ -68,6 +66,7 @@ void Game::play(){
             pause();
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
+            pause();
             currentPlayerIndex = (currentPlayerIndex + 1) % numP;
             endGame=gameOver();
         }
@@ -85,8 +84,6 @@ void Game::play(){
         }
         cout<<setw(21)<<""<<"Game winner: "<<winner<<endl;
         cout<<setw(21)<<""<<"Total Score: "<<highScore<<endl;
-        
-        
     }
     //Single Player
     else{
