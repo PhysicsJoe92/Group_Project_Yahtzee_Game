@@ -5,7 +5,7 @@
 #include "Game.hpp"
 
 Game::Game(){
-    numP=1;
+    numP=0;
     dice.setSize(5);
 }
 
@@ -31,18 +31,23 @@ void Game::start(){
     int choice;
     bool again;
     do{
+        system("clear");
         choice=loginMenu();
         switch(choice){
-            case 1: addPlayer();break;//Add user (login)
-            case 2: createPlayer();break;//Create new user
+            case 1: system("clear");addPlayer();break;//Add user (login)
+            case 2: system("clear");createPlayer();break;//Create new user
             case 3: 
+                system("clear");
                 if(players.size()<1){
                     cout<<setw(21)<<""<<"No Players in Queue..."<<endl;
+                    this_thread::sleep_for(chrono::seconds(2));
                     break;
                 }
                 else{
                     play();//Play game -> play()
                     again=playAgain();
+                    //Clear the vector
+                    players.clear();
                     break;
                 }
         }
@@ -65,6 +70,7 @@ void Game::play(){
             if(!players[currentPlayerIndex].isPlayerDone())
                 printCard(players[currentPlayerIndex]);
             pause();
+            system("clear");
             currentPlayerIndex = (currentPlayerIndex + 1) % numP;
             endGame=gameOver();
         }
@@ -87,9 +93,11 @@ void Game::play(){
     else{
         Player currPlayer = players[0];
         while(!currPlayer.isPlayerDone()){
+            system("clear");
             currPlayer.takeTurn(dice);
             if(!currPlayer.isPlayerDone())printCard(currPlayer);
             pause();
+            system("clear");
         }
         currPlayer.setScore();
         currPlayer.saveCard();
@@ -221,13 +229,19 @@ void Game::addPlayer(){
                 }
             }
             delete[] password;
+            
         }
         else{
             cout<<setw(21)<<" "<<"No User Name on Record"<<endl;
+            this_thread::sleep_for(chrono::seconds(2));
         }
         file.close();
         delete[] uname;
         numP=players.size();
+    }
+    else{
+        cout<<setw(21)<<" "<<"Maximum number of players reached"<<endl;
+        this_thread::sleep_for(chrono::seconds(2));
     }
 }
 void Game::createPlayer(){

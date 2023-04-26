@@ -25,7 +25,7 @@ Player::Player(string name,unsigned int pID){
     
     file.close();
     
-    saveCard();
+    //saveCard();
 }
 
 void Player::resetDKeep(int *dieKeep,int keep){

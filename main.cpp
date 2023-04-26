@@ -19,9 +19,11 @@ int main(int argc, char** argv) {
         debug(game);
         return 0;
     }
+    if(playGame){
+        game.start();
+        game.end();
+    }
     
-    game.start();
-    game.end();
     
     return 0;
 }
