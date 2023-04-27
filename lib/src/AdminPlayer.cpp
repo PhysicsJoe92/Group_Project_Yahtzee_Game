@@ -59,8 +59,11 @@ void AdminPlayer::readDataIntoMap(){
 
 void AdminPlayer::showUsers(){
     std::map<unsigned int,std::string>::iterator it;
+    cout<<setw(21)<<""<<"User ID:";
+    cout<<setw(5)<<""<<"User Name: "<<endl;
+    
     for(it = users.begin(); it != users.end(); it++){
-        std::cout << "ID: " << it->first << " Username: " << it->second << std::endl;
+        cout<<setw(28)<<""<< it->first << setw(5)<<""<<it->second << std::endl;
     }
 }
 
