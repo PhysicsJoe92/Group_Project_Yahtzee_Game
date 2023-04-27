@@ -66,6 +66,10 @@ void AdminPlayer::showUsers(){
     for(it = users.begin(); it != users.end(); it++){
         cout<<setw(28)<<""<< it->first << setw(5)<<""<<it->second << std::endl;
     }
+    //Wait for input to continue
+    cout<<"\n\n";
+    cout<<setw(21)<<""<<"Press ENTER to continue...";
+    cin.get();
 }
 
 void AdminPlayer::removeUser(){
