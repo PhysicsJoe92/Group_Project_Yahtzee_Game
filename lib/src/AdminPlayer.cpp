@@ -71,7 +71,7 @@ void AdminPlayer::showUsers(){
 void AdminPlayer::removeUser(){
     Scanner sc;
     unsigned int id;
-    cout<<"Enter User ID: ";
+    cout<<setw(21)<<""<<"Enter User ID: ";
     id=sc.nextInt();
     //Remove user from passwd.bin
     fstream file,tmp;
