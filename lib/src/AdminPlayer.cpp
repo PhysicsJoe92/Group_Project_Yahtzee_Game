@@ -30,7 +30,7 @@ void AdminPlayer::adminSession(Menu& menu){
             case 1:system("clear");showUsers();break;//View Users
             case 2:system("clear");removeUser();break;//Remove User
         }
-        system("celar");
+        system("clear");
     }while(choice!=3);
 }
 void AdminPlayer::readDataIntoMap(){
