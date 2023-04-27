@@ -21,7 +21,7 @@ void AdminPlayer::adminSession(Menu& menu){
     Scanner sc;
     //Start admin loop
     int choice;
-    
+    system("clear");
     do{
         menu.printAdminMenu();
         cout<<setw(21)<<""<<"Selection: ";
