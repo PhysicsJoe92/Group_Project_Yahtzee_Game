@@ -39,7 +39,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/lib/inlcude/SHA256.o \
 	${OBJECTDIR}/lib/inlcude/Scanner.o \
 	${OBJECTDIR}/lib/src/AdminPlayer.o \
-	${OBJECTDIR}/lib/src/BSTMenu.o \
 	${OBJECTDIR}/lib/src/Dice.o \
 	${OBJECTDIR}/lib/src/Game.o \
 	${OBJECTDIR}/lib/src/Menu.o \
@@ -91,11 +90,6 @@ ${OBJECTDIR}/lib/src/AdminPlayer.o: lib/src/AdminPlayer.cpp
 	${MKDIR} -p ${OBJECTDIR}/lib/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/AdminPlayer.o lib/src/AdminPlayer.cpp
-
-${OBJECTDIR}/lib/src/BSTMenu.o: lib/src/BSTMenu.cpp
-	${MKDIR} -p ${OBJECTDIR}/lib/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/BSTMenu.o lib/src/BSTMenu.cpp
 
 ${OBJECTDIR}/lib/src/Dice.o: lib/src/Dice.cpp
 	${MKDIR} -p ${OBJECTDIR}/lib/src

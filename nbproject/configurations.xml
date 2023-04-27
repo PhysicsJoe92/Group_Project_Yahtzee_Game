@@ -12,8 +12,6 @@
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <itemPath>lib/src/AdminPlayer.hpp</itemPath>
-        <itemPath>lib/src/BSTMenu.hpp</itemPath>
-        <itemPath>lib/src/BSTNode.hpp</itemPath>
         <itemPath>lib/src/Enums.hpp</itemPath>
         <itemPath>lib/src/Game.hpp</itemPath>
         <itemPath>lib/src/Menu.hpp</itemPath>
@@ -58,7 +56,6 @@
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <itemPath>lib/src/AdminPlayer.cpp</itemPath>
-        <itemPath>lib/src/BSTMenu.cpp</itemPath>
         <itemPath>lib/src/Dice.cpp</itemPath>
         <itemPath>lib/src/Game.cpp</itemPath>
         <itemPath>lib/src/Menu.cpp</itemPath>
@@ -138,12 +135,6 @@
       <item path="lib/src/AdminPlayer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="lib/src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lib/src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="lib/src/BSTMenu.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lib/src/BSTNode.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/src/Dice.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -245,12 +236,6 @@
       <item path="lib/src/AdminPlayer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="lib/src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lib/src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="lib/src/BSTMenu.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lib/src/BSTNode.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/src/Dice.cpp" ex="false" tool="1" flavor2="0">
       </item>
