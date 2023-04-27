@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.cc to edit this template
  */
 
+/* 
+ * File:   SHA1.hpp
+ * Author: Joseph Hernandez
+ *
+ * Created on April 10, 2023, 1:21 PM
+ */
+
 #include "SHA256.hpp"
 
 SHA256::SHA256(){

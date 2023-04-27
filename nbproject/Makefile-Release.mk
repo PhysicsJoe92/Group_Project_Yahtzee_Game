@@ -35,17 +35,17 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/src/AdminPlayer.o \
-	${OBJECTDIR}/src/BSTMenu.o \
-	${OBJECTDIR}/src/Dice.o \
-	${OBJECTDIR}/src/Game.o \
-	${OBJECTDIR}/src/Menu.o \
-	${OBJECTDIR}/src/Player.o \
-	${OBJECTDIR}/src/SHA1.o \
-	${OBJECTDIR}/src/SHA256.o \
-	${OBJECTDIR}/src/Scanner.o \
-	${OBJECTDIR}/src/ScoreCard.o
+	${OBJECTDIR}/lib/inlcude/SHA1.o \
+	${OBJECTDIR}/lib/inlcude/SHA256.o \
+	${OBJECTDIR}/lib/inlcude/Scanner.o \
+	${OBJECTDIR}/lib/src/AdminPlayer.o \
+	${OBJECTDIR}/lib/src/BSTMenu.o \
+	${OBJECTDIR}/lib/src/Dice.o \
+	${OBJECTDIR}/lib/src/Game.o \
+	${OBJECTDIR}/lib/src/Menu.o \
+	${OBJECTDIR}/lib/src/Player.o \
+	${OBJECTDIR}/lib/src/ScoreCard.o \
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -66,106 +66,66 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/group_project_yahtzee_game.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yahtzee.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/group_project_yahtzee_game.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yahtzee.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/group_project_yahtzee_game ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yahtzee ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/lib/inlcude/SHA1.o: lib/inlcude/SHA1.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/inlcude
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/inlcude/SHA1.o lib/inlcude/SHA1.cpp
+
+${OBJECTDIR}/lib/inlcude/SHA256.o: lib/inlcude/SHA256.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/inlcude
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/inlcude/SHA256.o lib/inlcude/SHA256.cpp
+
+${OBJECTDIR}/lib/inlcude/Scanner.o: lib/inlcude/Scanner.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/inlcude
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/inlcude/Scanner.o lib/inlcude/Scanner.cpp
+
+${OBJECTDIR}/lib/src/AdminPlayer.o: lib/src/AdminPlayer.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/AdminPlayer.o lib/src/AdminPlayer.cpp
+
+${OBJECTDIR}/lib/src/BSTMenu.o: lib/src/BSTMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/BSTMenu.o lib/src/BSTMenu.cpp
+
+${OBJECTDIR}/lib/src/Dice.o: lib/src/Dice.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/Dice.o lib/src/Dice.cpp
+
+${OBJECTDIR}/lib/src/Game.o: lib/src/Game.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/Game.o lib/src/Game.cpp
+
+${OBJECTDIR}/lib/src/Menu.o: lib/src/Menu.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/Menu.o lib/src/Menu.cpp
+
+${OBJECTDIR}/lib/src/Player.o: lib/src/Player.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/Player.o lib/src/Player.cpp
+
+${OBJECTDIR}/lib/src/ScoreCard.o: lib/src/ScoreCard.cpp
+	${MKDIR} -p ${OBJECTDIR}/lib/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/src/ScoreCard.o lib/src/ScoreCard.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/src/AdminPlayer.o: src/AdminPlayer.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/AdminPlayer.o src/AdminPlayer.cpp
-
-${OBJECTDIR}/src/BSTMenu.o: src/BSTMenu.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/BSTMenu.o src/BSTMenu.cpp
-
-${OBJECTDIR}/src/BSTMenu.hpp.gch: src/BSTMenu.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/BSTMenu.hpp
-
-${OBJECTDIR}/src/BSTNode.hpp.gch: src/BSTNode.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/BSTNode.hpp
-
-${OBJECTDIR}/src/Dice.o: src/Dice.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Dice.o src/Dice.cpp
-
-${OBJECTDIR}/src/Dice.hpp.gch: src/Dice.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Dice.hpp
-
-${OBJECTDIR}/src/Enums.hpp.gch: src/Enums.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Enums.hpp
-
-${OBJECTDIR}/src/Game.o: src/Game.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Game.o src/Game.cpp
-
-${OBJECTDIR}/src/Game.hpp.gch: src/Game.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Game.hpp
-
-${OBJECTDIR}/src/Menu.o: src/Menu.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Menu.o src/Menu.cpp
-
-${OBJECTDIR}/src/Menu.hpp.gch: src/Menu.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Menu.hpp
-
-${OBJECTDIR}/src/Player.o: src/Player.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Player.o src/Player.cpp
-
-${OBJECTDIR}/src/Player.hpp.gch: src/Player.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/Player.hpp
-
-${OBJECTDIR}/src/SHA1.o: src/SHA1.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SHA1.o src/SHA1.cpp
-
-${OBJECTDIR}/src/SHA256.o: src/SHA256.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SHA256.o src/SHA256.cpp
-
-${OBJECTDIR}/src/Scanner.o: src/Scanner.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Scanner.o src/Scanner.cpp
-
-${OBJECTDIR}/src/ScoreCard.o: src/ScoreCard.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ScoreCard.o src/ScoreCard.cpp
-
-${OBJECTDIR}/src/ScoreCard.hpp.gch: src/ScoreCard.hpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o "$@" src/ScoreCard.hpp
+	$(COMPILE.cc) -O2 -Ilib/inlcude -include lib/inlcude/SHA.hpp -include lib/inlcude/SHA1.hpp -include lib/inlcude/SHA256.hpp -include lib/inlcude/Scanner.hpp -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

@@ -1,3 +1,9 @@
+/* 
+ * File:   Game.h
+ * Author: Joseph Hernandez
+ *
+ * Created on November 4, 2022, 2:15 AM
+ */
 
 #ifndef GAME_H
 #define GAME_H
@@ -7,10 +13,7 @@
 #include "Player.hpp"
 #include "Dice.hpp"
 #include "Menu.hpp"
-#include "Scanner.hpp"
-#include "SHA.hpp"
 
-enum Privilege{Admin,Standard};
 
 class Game{
     public:
@@ -37,14 +40,14 @@ class Game{
         void addPlayer();
         void createPlayer();
         void checkFile();
-        void createFile();
+        void createFile(string);
         unsigned int setID();
         unsigned int getID(fstream&);
         bool usernameCheck(fstream&,char*);
         bool validPassword(fstream&,char*);
         bool passwordFormat(char*);
         Privilege getPrivilege(fstream&);
-        void playerRecords(char * , int );
+        void playerRecords(char*,unsigned int);
 };
 
 #endif /* GAME_H */

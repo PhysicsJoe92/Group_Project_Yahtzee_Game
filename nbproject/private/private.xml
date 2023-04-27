@@ -5,17 +5,10 @@
     </code-assistance-data>
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>1</activeConfIndexElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/F:/Group_Project_Yahtzee_Game/main.cpp</file>
-            <file>file:/F:/Group_Project_Yahtzee_Game/src/AdminPlayer.hpp</file>
-            <file>file:/F:/Group_Project_Yahtzee_Game/src/AdminPlayer.cpp</file>
-            <file>file:/F:/Group_Project_Yahtzee_Game/src/Game.hpp</file>
-            <file>file:/F:/Group_Project_Yahtzee_Game/src/Menu.hpp</file>
-            <file>file:/F:/Group_Project_Yahtzee_Game/src/Game.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

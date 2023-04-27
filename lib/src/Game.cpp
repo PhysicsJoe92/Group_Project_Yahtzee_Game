@@ -31,11 +31,11 @@ void Game::start(){
     //Check if etc/passwd.bin exist
     checkFile();
     int choice;
-    bool again;
+    bool again=true;
     do{
         choice=loginMenu();
         switch(choice){
-            case 1: addPlayer();break;//Add user (login)
+            case 1:addPlayer();break;//Add user (login)
             case 2:createPlayer();break;//Create new user
             case 3: 
                 if(players.size()<1){
@@ -189,20 +189,22 @@ void Game::addPlayer(){
         long cursor=0L;
         Scanner sc;
         //Give a login screen that will ask for the username/password
-        cout<<setw(21)<<" "<<"Enter username: ";
+        cout<<setw(21)<<""<<"Enter username: ";
         char* uname=sc.nextChar();
         //Search for username
         if(usernameCheck(file,uname)){
-            cout<<setw(21)<<" "<<"Enter password: ";
+            cout<<setw(21)<<""<<"Enter password: ";
             char* password=sc.nextChar();
             if(!validPassword(file,password)){
-                cout<<setw(21)<<" "<<"Invalid Password"<<endl;
+                cout<<setw(21)<<""<<"Invalid Password"<<endl;
             }
             else{
                 //Check privilege level
                 Privilege priv=getPrivilege(file);
                 if(priv==Privilege::Admin){
                     //Admin menu
+                    AdminPlayer admin;
+                    admin.adminSession(menu);
                 }
                 else{
                     //Get the user ID
@@ -245,11 +247,11 @@ void Game::createPlayer(){
     fstream file;
     file.open("etc/passwd.bin",ios::in|ios::binary);
 
-    cout<<"Enter username: ";
+    cout<<setw(21)<<""<<"Enter username: ";
     char* userName=sc.nextChar();
     //Make sure username doesnt already exists
     if(!usernameCheck(file,userName)){
-        cout<<"Enter password: ";
+        cout<<setw(21)<<""<<"Enter password: ";
         char* password=sc.nextChar();
         //Validate password
         while(!passwordFormat(password)){
@@ -281,10 +283,15 @@ void Game::createPlayer(){
         string userID=to_string(id);
         string fileName="saves/" + name + "_" + userID +".sav";
         pFile.open(fileName,ios::out|ios::binary);
+        //Clean up memory
+        delete[] password;
     }
     else{
         cout<<"Username already exist..."<<endl;
     }
+    //Clean up memory
+    file.close();
+    delete[] userName;
 }
 bool Game::usernameCheck(fstream& file,char* userName){
     //Search through the file to see if the userName exists, if it does return true
@@ -405,50 +412,58 @@ void Game::debugGame(){
 }
 void Game::checkFile(){
     fstream file;
-    file.open("etc/passwd.bin",ios::in|ios::binary);
+    string fileName="etc/passwd.bin";
+    file.open(fileName,ios::in|ios::binary);
     if(!file.is_open()){
-        createFile();
+        createFile(fileName);
+    }
+    else{
+        file.close();
+    }
+    fileName="home/user_info.dat";
+    file.open(fileName,ios::in|ios::binary);
+    if(!file.is_open()){
+        createFile(fileName);
     }
     else{
         file.close();
     }
 }
-void Game::createFile(){
+void Game::createFile(string fileName){
     fstream file;
-    file.open("etc/passwd.bin",ios::out|ios::binary);
+    file.open(fileName,ios::out|ios::binary);
     
-    //Create admin user
-    char name[] = "admin";
-    char password[] = "password";
-    Privilege priv=Privilege::Admin;
-    unsigned int userID=0;
-    //Hash username
-    SHA1 nameHash(name);
-    char* nameDigest=(char*)nameHash.getDigest();
-    //Hash password
-    SHA256 passwdHash(password);
-    char* passwdDigest=(char*)passwdHash.getDigest();
-    
-    file.seekp(0,ios::beg);
-    file.write(nameDigest,sizeof(char)*20);
-    file.write(passwdDigest,sizeof(char)*32);
-    file.write(reinterpret_cast<char*>(&priv),sizeof(int));
-    file.write(reinterpret_cast<char*>(&userID),sizeof(unsigned int));
+    if(fileName.compare("etc/passwd.bin")==0){
+        //Create admin user
+        char name[] = "admin";
+        char password[] = "password";
+        Privilege priv=Privilege::Admin;
+        unsigned int userID=0;
+        //Hash username
+        SHA1 nameHash(name);
+        char* nameDigest=(char*)nameHash.getDigest();
+        //Hash password
+        SHA256 passwdHash(password);
+        char* passwdDigest=(char*)passwdHash.getDigest();
 
+        file.seekp(0,ios::beg);
+        file.write(nameDigest,sizeof(char)*20);
+        file.write(passwdDigest,sizeof(char)*32);
+        file.write(reinterpret_cast<char*>(&priv),sizeof(int));
+        file.write(reinterpret_cast<char*>(&userID),sizeof(unsigned int));
+    }
+    
     file.close();
 }
 
-void Game::playerRecords(char * uname, int id){
-    int size = 0;
-    while(uname[size] != '\0'){
-        size++;
-    }
-    ofstream file("userInfo.dat",ios::in|ios::out|ios::binary | ios::app);
-    if( !file.is_open()){
-        cout << "Failed to open file userInfo.dat" << endl;
-        return;
-    }
-    file.write(reinterpret_cast<const char*>(&size), sizeof(size));
-    file.write(uname,size);
-    file.write(reinterpret_cast<const char*>(&id), sizeof(id));
+void Game::playerRecords(char* uname,unsigned int id){
+    fstream file("home/user_info.dat",ios::out|ios::binary|ios::app);
+    
+    int size = strlen(uname)+1;//Add 1 to get the null terminator
+    //Load Id first, this will make searching a little faster
+    file.write(reinterpret_cast<const char*>(&id), sizeof(unsigned int));
+    file.write(reinterpret_cast<const char*>(&size), sizeof(int));
+    file.write(uname,size);//Keep var length data at end
+    //Close file
+    file.close();
 }

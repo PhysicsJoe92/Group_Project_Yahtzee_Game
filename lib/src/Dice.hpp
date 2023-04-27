@@ -1,3 +1,9 @@
+/* 
+ * File:   Dice.h
+ * Author: Joseph Hernandez
+ *
+ * Created on November 1, 2022, 5:24 PM
+ */
 
 #ifndef DICE_H
 #define DICE_H

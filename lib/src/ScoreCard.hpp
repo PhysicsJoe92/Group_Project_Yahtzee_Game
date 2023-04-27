@@ -3,6 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.h to edit this template
  */
 
+/* 
+ * File:   ScoreCard.h
+ * Author: Joseph Hernandez
+ *
+ * Created on November 3, 2022, 12:42 AM
+ */
 
 #ifndef SCORECARD_H
 #define SCORECARD_H

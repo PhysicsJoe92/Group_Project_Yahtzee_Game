@@ -4,8 +4,8 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>Yahtzee</name>
-            <c-extensions>cpp</c-extensions>
-            <cpp-extensions/>
+            <c-extensions/>
+            <cpp-extensions>cpp</cpp-extensions>
             <header-extensions>hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
@@ -13,6 +13,10 @@
                 <sourceRootElem>res</sourceRootElem>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>saves</sourceRootElem>
+                <sourceRootElem>res</sourceRootElem>
+                <sourceRootElem>src</sourceRootElem>
+                <sourceRootElem>saves</sourceRootElem>
+                <sourceRootElem>lib/inlcude</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -1,5 +1,10 @@
+/* 
+ * File:   main.cpp
+ * Author: Joseph Hernandez
+ * Created on November 3, 2022, 5:29 PM
+ */
 
-#include "src/Game.hpp"
+#include "lib/src/Game.hpp"
 
 void debug(Game&);
 
@@ -15,6 +20,7 @@ int main(int argc, char** argv) {
         debug(game);
         return 0;
     }
+    
     if(playGame){
         game.start();
         game.end();

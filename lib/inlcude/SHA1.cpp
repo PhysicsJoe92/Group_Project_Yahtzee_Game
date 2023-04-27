@@ -1,4 +1,9 @@
-
+/* 
+ * File:   SHA1.hpp
+ * Author: Joseph Hernandez
+ *
+ * Created on April 10, 2023, 1:21 PM
+ */
 
 #include "SHA1.hpp"
 
