@@ -19,3 +19,4 @@ dist/Release/Cygwin-Windows/yahtzee.exe
 *.stackdump
 yahtzee.exe.stackdump
 yahtzee.exe.stackdump
+dist/Debug/Cygwin-Windows/yahtzee.exe
