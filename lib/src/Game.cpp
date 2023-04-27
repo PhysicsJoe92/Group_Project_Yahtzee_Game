@@ -35,9 +35,10 @@ void Game::start(){
     do{
         choice=loginMenu();
         switch(choice){
-            case 1:addPlayer();break;//Add user (login)
-            case 2:createPlayer();break;//Create new user
-            case 3: 
+            case 1:system("clear");addPlayer();break;//Add user (login)
+            case 2:system("clear");createPlayer();break;//Create new user
+            case 3:
+                system("clear");
                 if(players.size()<1){
                     cout<<setw(21)<<""<<"No Players in Queue..."<<endl;
                     break;
@@ -50,8 +51,8 @@ void Game::start(){
                     break;
                 }
         }
+        system("clear");
     }while((choice!=4) && (again));
-    
 }
 
 void Game::play(){

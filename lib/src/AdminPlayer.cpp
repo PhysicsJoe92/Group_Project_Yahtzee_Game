@@ -27,10 +27,10 @@ void AdminPlayer::adminSession(Menu& menu){
         cout<<setw(21)<<""<<"Selection: ";
         choice=sc.nextInt();
         switch(choice){
-            case 1:showUsers();break;//View Users
-            case 2:removeUser();break;//Remove User
+            case 1:system("clear");showUsers();break;//View Users
+            case 2:system("clear");removeUser();break;//Remove User
         }
-        
+        system("celar");
     }while(choice!=3);
 }
 void AdminPlayer::readDataIntoMap(){
