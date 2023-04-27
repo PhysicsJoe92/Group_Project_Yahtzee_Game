@@ -10,6 +10,7 @@
 
 
 enum class Face{ONE,TWO,THREE,FOUR,FIVE,SIX,ALL};
+enum Privilege{Admin,Standard};
 
 #endif /* ENUMS_H */
 

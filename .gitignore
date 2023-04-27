@@ -14,3 +14,9 @@ build/Release/Cygwin-Windows/src/Player.o.d
 build/Release/Cygwin-Windows/src/ScoreCard.o
 build/Release/Cygwin-Windows/src/ScoreCard.o.d
 dist/Release/Cygwin-Windows/yahtzee.exe
+*.o
+*.d
+*.stackdump
+yahtzee.exe.stackdump
+yahtzee.exe.stackdump
+dist/Debug/Cygwin-Windows/yahtzee.exe

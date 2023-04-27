@@ -13,6 +13,10 @@
                 <sourceRootElem>res</sourceRootElem>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>saves</sourceRootElem>
+                <sourceRootElem>res</sourceRootElem>
+                <sourceRootElem>src</sourceRootElem>
+                <sourceRootElem>saves</sourceRootElem>
+                <sourceRootElem>lib/inlcude</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

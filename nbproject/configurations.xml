@@ -4,15 +4,21 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="inlcude" displayName="inlcude" projectFiles="true">
+        <itemPath>lib/inlcude/SHA.hpp</itemPath>
+        <itemPath>lib/inlcude/SHA1.hpp</itemPath>
+        <itemPath>lib/inlcude/SHA256.hpp</itemPath>
+        <itemPath>lib/inlcude/Scanner.hpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
-        <itemPath>src/BSTMenu.hpp</itemPath>
-        <itemPath>src/BSTNode.hpp</itemPath>
-        <itemPath>src/Dice.hpp</itemPath>
-        <itemPath>src/Enums.hpp</itemPath>
-        <itemPath>src/Game.hpp</itemPath>
-        <itemPath>src/Menu.hpp</itemPath>
-        <itemPath>src/Player.hpp</itemPath>
-        <itemPath>src/ScoreCard.hpp</itemPath>
+        <itemPath>lib/src/AdminPlayer.hpp</itemPath>
+        <itemPath>lib/src/BSTMenu.hpp</itemPath>
+        <itemPath>lib/src/BSTNode.hpp</itemPath>
+        <itemPath>lib/src/Enums.hpp</itemPath>
+        <itemPath>lib/src/Game.hpp</itemPath>
+        <itemPath>lib/src/Menu.hpp</itemPath>
+        <itemPath>lib/src/Player.hpp</itemPath>
+        <itemPath>lib/src/ScoreCard.hpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -29,8 +35,10 @@
           <itemPath>res/Faces/Two.txt</itemPath>
         </logicalFolder>
         <logicalFolder name="Menu" displayName="Menu" projectFiles="true">
+          <itemPath>res/Menu/AdminMenu.txt</itemPath>
           <itemPath>res/Menu/Categories.txt</itemPath>
           <itemPath>res/Menu/End.txt</itemPath>
+          <itemPath>res/Menu/LoginMenu.txt</itemPath>
           <itemPath>res/Menu/MainMenu.txt</itemPath>
           <itemPath>res/Menu/Rules.txt</itemPath>
         </logicalFolder>
@@ -43,15 +51,32 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="inlcude" displayName="inlcude" projectFiles="true">
+        <itemPath>lib/inlcude/SHA1.cpp</itemPath>
+        <itemPath>lib/inlcude/SHA256.cpp</itemPath>
+        <itemPath>lib/inlcude/Scanner.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
-        <itemPath>src/BSTMenu.cpp</itemPath>
-        <itemPath>src/Dice.cpp</itemPath>
-        <itemPath>src/Game.cpp</itemPath>
-        <itemPath>src/Menu.cpp</itemPath>
-        <itemPath>src/Player.cpp</itemPath>
-        <itemPath>src/ScoreCard.cpp</itemPath>
+        <itemPath>lib/src/AdminPlayer.cpp</itemPath>
+        <itemPath>lib/src/BSTMenu.cpp</itemPath>
+        <itemPath>lib/src/Dice.cpp</itemPath>
+        <itemPath>lib/src/Game.cpp</itemPath>
+        <itemPath>lib/src/Menu.cpp</itemPath>
+        <itemPath>lib/src/Player.cpp</itemPath>
+        <itemPath>lib/src/ScoreCard.cpp</itemPath>
       </logicalFolder>
       <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -69,6 +94,10 @@
     <Elem>res</Elem>
     <Elem>src</Elem>
     <Elem>saves</Elem>
+    <Elem>res</Elem>
+    <Elem>src</Elem>
+    <Elem>saves</Elem>
+    <Elem>lib/inlcude</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -81,8 +110,61 @@
       <compileType>
         <ccTool>
           <standard>11</standard>
+          <incDir>
+            <pElem>lib/inlcude</pElem>
+          </incDir>
+          <incFile>
+            <pElem>lib/inlcude/SHA.hpp</pElem>
+            <pElem>lib/inlcude/SHA1.hpp</pElem>
+            <pElem>lib/inlcude/SHA256.hpp</pElem>
+            <pElem>lib/inlcude/Scanner.hpp</pElem>
+          </incFile>
         </ccTool>
       </compileType>
+      <item path="lib/inlcude/SHA.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA1.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA256.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA256.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/Scanner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/Scanner.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/AdminPlayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/BSTMenu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/BSTNode.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Dice.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Enums.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Game.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Menu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Player.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/ScoreCard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/ScoreCard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="res/Faces/AllFaces.txt" ex="false" tool="3" flavor2="0">
@@ -99,9 +181,13 @@
       </item>
       <item path="res/Faces/Two.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/Menu/AdminMenu.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/Menu/Categories.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/Menu/End.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/Menu/LoginMenu.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/Menu/MainMenu.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -110,34 +196,6 @@
       <item path="saves/Joe.sav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="saves/test.sav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/BSTMenu.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/BSTNode.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Dice.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Dice.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enums.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Game.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Game.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Menu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Menu.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Player.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/ScoreCard.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/ScoreCard.hpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -153,6 +211,15 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>11</standard>
+          <incDir>
+            <pElem>lib/inlcude</pElem>
+          </incDir>
+          <incFile>
+            <pElem>lib/inlcude/SHA.hpp</pElem>
+            <pElem>lib/inlcude/SHA1.hpp</pElem>
+            <pElem>lib/inlcude/SHA256.hpp</pElem>
+            <pElem>lib/inlcude/Scanner.hpp</pElem>
+          </incFile>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -161,6 +228,50 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="lib/inlcude/SHA.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA1.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA256.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/SHA256.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/inlcude/Scanner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/inlcude/Scanner.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/AdminPlayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/BSTMenu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/BSTNode.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Dice.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Enums.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Game.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Menu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/Player.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/src/ScoreCard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/src/ScoreCard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="res/Faces/AllFaces.txt" ex="false" tool="3" flavor2="0">
@@ -177,9 +288,13 @@
       </item>
       <item path="res/Faces/Two.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/Menu/AdminMenu.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/Menu/Categories.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/Menu/End.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/Menu/LoginMenu.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/Menu/MainMenu.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -188,34 +303,6 @@
       <item path="saves/Joe.sav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="saves/test.sav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/BSTMenu.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/BSTNode.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Dice.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Dice.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Enums.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Game.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Game.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Menu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Menu.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Player.hpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/ScoreCard.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/ScoreCard.hpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -4,13 +4,14 @@
  * Created on November 3, 2022, 5:29 PM
  */
 
-#include "src/Game.hpp"
+#include "lib/src/Game.hpp"
 
 void debug(Game&);
 
 int main(int argc, char** argv) {
     Game game;
-    
+ 
+
     bool debugGame = false;
     
     bool playGame = game.gameMenu(debugGame);
@@ -20,13 +21,11 @@ int main(int argc, char** argv) {
         return 0;
     }
     
-    while(playGame){
+    if(playGame){
         game.start();
-        game.play();
-        playGame = game.playAgain();
+        game.end();
     }
     
-    game.end();
     
     return 0;
 }

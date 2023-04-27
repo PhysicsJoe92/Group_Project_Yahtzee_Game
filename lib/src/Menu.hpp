@@ -21,11 +21,13 @@ class Menu{
     public:
         Menu();
         void printMainMenu();
+        void printLogin();
+        void printAdminMenu();
         void printRules();
         void printExit();
     private:
-        static const int num=3;
-        BSTMenu menuSys;
+        static const int NUM=5;
+        string menuSys[NUM];
 };
 
 #endif /* MENU_H */
