@@ -1,11 +1,4 @@
 
-/* 
- * File:   Game.h
- * Author: Joseph Hernandez
- *
- * Created on November 4, 2022, 2:15 AM
- */
-
 #ifndef GAME_H
 #define GAME_H
 #include <thread>
@@ -51,6 +44,7 @@ class Game{
         bool validPassword(fstream&,char*);
         bool passwordFormat(char*);
         Privilege getPrivilege(fstream&);
+        void playerRecords(char * , int );
 };
 
 #endif /* GAME_H */

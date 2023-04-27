@@ -18,6 +18,7 @@
         <itemPath>src/Scanner.hpp</itemPath>
         <itemPath>src/ScoreCard.hpp</itemPath>
       </logicalFolder>
+      <itemPath>src/AdminPlayer.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -58,6 +59,7 @@
         <itemPath>src/Scanner.cpp</itemPath>
         <itemPath>src/ScoreCard.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/AdminPlayer.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -120,6 +122,10 @@
       <item path="saves/Joe.sav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="saves/test.sav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/AdminPlayer.cpp" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -214,6 +220,10 @@
       <item path="saves/Joe.sav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="saves/test.sav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/AdminPlayer.cpp" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/AdminPlayer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/BSTMenu.cpp" ex="false" tool="1" flavor2="0">
       </item>

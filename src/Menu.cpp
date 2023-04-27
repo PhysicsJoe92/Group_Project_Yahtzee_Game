@@ -1,9 +1,3 @@
-/*
- * File: Menu.cpp
- * Author: Joseph Hernandez
- * Created on November 4, 2022, 10:48 PM
- * 
- */
 
 #include "Menu.hpp"
 

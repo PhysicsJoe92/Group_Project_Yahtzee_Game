@@ -1,8 +1,4 @@
-/* 
- * File:   Player.h
- * Author: Joseph Hernandez
- * Created on November 3, 2022, 9:48 PM
- */
+
 
 #ifndef PLAYER_H
 #define PLAYER_H

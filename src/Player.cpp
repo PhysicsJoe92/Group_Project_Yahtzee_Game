@@ -24,7 +24,6 @@ Player::Player(string name,unsigned int pID){
     if(!isEmpty(file)){card.replaceCard(userName,ID);}
     
     file.close();
-    
     //saveCard();
 }
 

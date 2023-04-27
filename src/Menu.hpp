@@ -1,9 +1,3 @@
-/* 
- * File:   Menu.h
- * Author: Joseph Hernandez
- *
- * Created on November 4, 2022, 10:46 PM
- */
 
 #ifndef MENU_H
 #define MENU_H

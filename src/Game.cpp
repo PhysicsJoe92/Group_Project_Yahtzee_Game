@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.cc to edit this template
  */
 #include "Game.hpp"
-
+#include "AdminPlayer.hpp"
 Game::Game(){
     numP=0;
     dice.setSize(5);
+    //AdminPlayer playerAdmin;
+    //playerAdmin.showUsers();
 }
 
 void Game::start(){
@@ -273,7 +275,7 @@ void Game::createPlayer(){
         file.write(reinterpret_cast<char*>(&priv),sizeof(int));
         file.write(reinterpret_cast<char*>(&id),sizeof(unsigned int));
         file.close();
-
+        playerRecords(userName,id);
         fstream pFile;
         string name=userName;
         string userID=to_string(id);
@@ -434,4 +436,19 @@ void Game::createFile(){
     file.write(reinterpret_cast<char*>(&userID),sizeof(unsigned int));
 
     file.close();
+}
+
+void Game::playerRecords(char * uname, int id){
+    int size = 0;
+    while(uname[size] != '\0'){
+        size++;
+    }
+    ofstream file("userInfo.dat",ios::in|ios::out|ios::binary | ios::app);
+    if( !file.is_open()){
+        cout << "Failed to open file userInfo.dat" << endl;
+        return;
+    }
+    file.write(reinterpret_cast<const char*>(&size), sizeof(size));
+    file.write(uname,size);
+    file.write(reinterpret_cast<const char*>(&id), sizeof(id));
 }
