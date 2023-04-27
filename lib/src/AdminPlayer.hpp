@@ -46,9 +46,7 @@ private:
         int size;
         char* name;
     };
-    
-    
-    
+
     std::map<unsigned int, std::string> users;
     
     
