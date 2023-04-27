@@ -24,10 +24,11 @@ void AdminPlayer::adminSession(Menu& menu){
     
     do{
         menu.printAdminMenu();
+        cout<<setw(21)<<""<<"Selection: ";
         choice=sc.nextInt();
         switch(choice){
             case 1:showUsers();break;//View Users
-            case 2:break;//Remove User
+            case 2:removeUser();break;//Remove User
         }
         
     }while(choice!=3);
@@ -67,7 +68,11 @@ void AdminPlayer::showUsers(){
     }
 }
 
-void AdminPlayer::removeUser(unsigned int id){
+void AdminPlayer::removeUser(){
+    Scanner sc;
+    unsigned int id;
+    cout<<"Enter User ID: ";
+    id=sc.nextInt();
     //Remove user from passwd.bin
     fstream file,tmp;
     string fileName="etc/passwd.bin",

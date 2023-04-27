@@ -54,7 +54,7 @@ private:
     
     void readDataIntoMap();
     void showUsers();
-    void removeUser(unsigned int);
+    void removeUser();
 };
 
 #endif /* ADMINPLAYER_HPP */
