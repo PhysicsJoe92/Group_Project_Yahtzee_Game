@@ -75,15 +75,15 @@ void AdminPlayer::removeUser(){
     id=sc.nextInt();
     //Remove user from passwd.bin
     fstream file,tmp;
-    string fileName="etc/passwd.bin",
-           tmpName="etc/temp.bin";
-    file.open(fileName,ios::in|ios::binary);
-    tmp.open(tmpName,ios::out|ios::binary);
+
+    file.open("etc/passwd.bin",ios::in|ios::binary);
+    tmp.open("etc/temp.bin",ios::out|ios::binary);
     long cursor=0L;
     file.seekg(0,ios::end);
     long size=file.tellg();
     while(cursor<size){
         LoginInfo info;
+        file.seekg(cursor,ios::beg);
         file.read(reinterpret_cast<char*>(&info),sizeof(LoginInfo));
         if(info.id!=id){
             //Only write to tmp file if not id
@@ -95,33 +95,40 @@ void AdminPlayer::removeUser(){
     tmp.close();
     
     //Remove old file
-    remove(fileName.c_str());
+    remove("etc/passwd.bin");
     //Rename tmp file
-    rename(tmpName.c_str(),fileName.c_str());
+    rename("etc/temp.bin","etc/passwd.bin");
     
     //Remove user info from userInfo.dat
-    fileName="home/user_info.dat";
-    tmpName="home/tmp.bin";
-    file.open(fileName,ios::in|ios::binary);
-    tmp.open(tmpName,ios::out|ios::binary);
+    fstream userFile,tmpUserFile;
+    userFile.open("home/user_info.dat",ios::in|ios::binary);
+    tmpUserFile.open("home/tmp.dat",ios::out|ios::binary);
     cursor=0L;
-    size=file.tellg();
+    userFile.seekg(0,ios::end);
+    size=userFile.tellg();
+    
     while(cursor<size){
         UserInfo info;
-        file.seekg(cursor,ios::beg);
-        file.read(reinterpret_cast<char*>(&info.id),sizeof(unsigned int));
-        file.read(reinterpret_cast<char*>(&info.size),sizeof(int));
-        file.read(info.name,info.size);
+        userFile.seekg(cursor,ios::beg);
+        userFile.read(reinterpret_cast<char*>(&info.id),sizeof(unsigned int));
+        userFile.read(reinterpret_cast<char*>(&info.size),sizeof(int));
+        info.name=new char[info.size];
+        userFile.read(info.name,info.size);
+        
         if(id!=info.id){
-            tmp.write(reinterpret_cast<char*>(&info),sizeof(info));
+            tmpUserFile.seekp(0,ios::cur);
+            tmpUserFile.write(reinterpret_cast<char*>(&info.id),sizeof(unsigned int));
+            tmpUserFile.write(reinterpret_cast<char*>(&info.size),sizeof(int));
+            tmpUserFile.write(info.name,info.size);
         }
-        cursor+=sizeof(info);
+        cursor+=(sizeof(unsigned int)+sizeof(int)+info.size);
+        delete[] info.name;
     }
 
     //Remove old file
-    remove(fileName.c_str());
+    remove("home/user_info.dat");
     //Rename tmp file
-    rename(tmpName.c_str(),fileName.c_str());
+    rename("home/tmp.dat","home/user_info.dat");
     
     //Delete user's scorecard
     string userCard = "saves/" + users[id] + "_" + to_string(id) + ".sav";
