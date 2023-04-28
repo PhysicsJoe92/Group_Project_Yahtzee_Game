@@ -350,7 +350,7 @@ bool Game::passwordFormat(char* passwd){
     }
     if(passSet!=31){
         std::cout<<"Password criteria not met"<<std::endl;
-        std::cout<<"Need:\n\tCapital Letter\n\tLower Case Letter"
+        std::cout<<"Need:\n\tAt least 8 characters\n\tCapital Letter\n\tLower Case Letter"
                 "\n\tNumber\n\tSpecial Character(! @ # $ &)"<<std::endl;
         return false;
     }
