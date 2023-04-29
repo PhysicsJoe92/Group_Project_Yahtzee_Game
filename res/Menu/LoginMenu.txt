@@ -3,7 +3,7 @@
                      |                                                      |
                      |                                                      |
                      |        Please Select from the following:             |
-                     |              1. Add Player to Queue                  |
+                     |              1. Login                                |
                      |              2. Create Player                        |
                      |              3. Play Game                            |
                      |              4. Quit                                 |
