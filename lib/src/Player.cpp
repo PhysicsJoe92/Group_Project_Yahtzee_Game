@@ -268,19 +268,18 @@ void Player::setScore(){
 bool Player::isEmpty(fstream& file){
     return file.peek() == fstream::traits_type::eof();
 }
-
 bool Player::isPlayerDone(){
     bool done=card.isCardFull();
     //if(done){card.saveCard(userName);}
     return done;
 }
-
 void Player::debugPlayer(Dice dice){
     dice.debugDice();
     selCat(dice);
     card.debugCard();
     printCard();
 }
+
 
 void Player::checkFile(){
     fstream file;
